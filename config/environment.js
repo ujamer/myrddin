@@ -4,7 +4,7 @@ module.exports = function(environment) {
   var ENV = {
     modulePrefix: 'phowiz',
     environment: environment,
-    baseURL: '/',
+    baseURL: '/phowiz',
     locationType: 'auto',
     EmberENV: {
       FEATURES: {

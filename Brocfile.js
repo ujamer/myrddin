@@ -2,7 +2,12 @@
 
 var EmberApp = require('ember-cli/lib/broccoli/ember-app');
 
-var app = new EmberApp();
+var app = new EmberApp({
+	'ember-cli-bootstrap-sassy': {
+    'js': ['transition','collapse','dropdown','tooltip','popover'],
+    'glyphicons': false
+  }
+});
 
 // Use `app.import` to add additional libraries to the generated
 // output files.

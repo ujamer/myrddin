@@ -1,0 +1,58 @@
+<nav class="navbar navbar-default navbar-fixed-top">
+	<div class="container-fluid">
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#phogen-menus">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <div class="navbar-brand" title="A PHO Interlude Wizard!">
+        {{fa-icon "magic" size="lg"}}
+      </div>
+		</div>
+
+		<div class="collapse navbar-collapse" id="phogen-menus">
+
+			{{! Place a list of document selections here.}}
+			<ul class="nav navbar-nav navbar-left">
+				<li class="dropdown">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" title="Open Documents">
+						{{fa-icon "folder-open" size="lg" fixedWidth=true}}
+						<span class="visible-xs-inline">Open Documents</span>
+						<span class="badge">5</span>
+					</a>
+					<ul class="dropdown-menu" role="menu">
+						<li role="presentation" class="dropdown-header"> Available Documents:</li>
+						<li role="presentation">
+							<a class="" role="menuitem" href="#">
+							{{fa-icon "edit" fixedWidth=true}}
+							Doc 1
+							</a>
+						</li>
+						<li role="presentation" class="divider"></li>
+						<li role="presentation">
+							<a role="menuitem" href="#">
+								{{fa-icon "file-o" fixedWidth=true}}
+								Start New Document
+							</a>
+							</li>
+					</ul>
+				</li>
+			</ul>
+
+			{{! Place toggle panel visibility on the right.}}
+			<ul class="nav navbar-nav navbar-right">
+				<li>
+					<a title="Toggle panel visibility"> 
+						{{fa-icon "toggle-off" size="lg" fixedWidth=true}}
+						<span class="visible-xs-inline">Toggle Panel View</span>
+					</a>
+				</li>
+			</ul>
+		</div>
+	</div>	
+</nav>
+
+{{! outlets for page contents}}
+{{outlet}}
