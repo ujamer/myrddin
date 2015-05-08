@@ -286,5 +286,106 @@ export default
     {
       "id": "48",
       "name": "Antigone"
+    },
+    {
+      "id": "49",
+      "name": "Thatdude"
+    },
+    {
+      "id": "50",
+      "name": "Mane Magenta"
+    },
+    {
+      "id": "51",
+      "name": "Dawgsmiles",
+      "tags": ["1"]
+    },
+    {
+      "id": "52",
+      "name": "Saskatchew"
+    },
+    {
+      "id": "53",
+      "name": "Feychick"
+    },
+    {
+      "id": "54",
+      "name": "Ne"
+    },
+    {
+      "id": "55",
+      "name": "Forgotten Creator"
+    },
+    {
+      "id": "56",
+      "name": "Logs"
+    },
+    {
+      "id": "57",
+      "name": "Noveltry"
+    },
+    {
+      "id": "58",
+      "name": "Ryus"
+    },
+    {
+      "id": "59",
+      "name": "Kriketz"
+    },
+    {
+      "id": "60",
+      "name": "Divide"
+    },
+    {
+      "id": "61",
+      "name": "Spiritskin"
+    },
+    {
+      "id": "62",
+      "name": "Iblis"
+    },
+    {
+      "id": "63",
+      "name": "Aloha"
+    },
+    {
+      "id": "64",
+      "name": "Loyal"
+    },
+    {
+      "id": "65",
+      "name": "Deimos"
+    },
+    {
+      "id": "66",
+      "name": "Deadman"
+    },
+    {
+      "id": "67",
+      "name": "Poit"
+    },
+    {
+      "id": "68",
+      "name": "BadSamurai"
+    },
+    {
+      "id": "69",
+      "name": "Ultracut"
+    },
+    {
+      "id": "70",
+      "name": "BadSamurai"
+    },
+    {
+      "id": "71",
+      "name": "QwertyD"
+    },
+    {
+      "id": "72",
+      "name": "Groupies"
+    },
+    {
+      "id": "73",
+      "name": "Acree"
     }]
   };

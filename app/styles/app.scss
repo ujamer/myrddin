@@ -1,11 +1,117 @@
 @import "bootstrap";
 
+/* Extra small devices (phones, less than 768px) */
+/* No media query since this is the default in Bootstrap */
+
+$brand-color: #415C87;
+
+// clickable a fix
+[data-ember-action] {
+  cursor: pointer;
+}
+
 body {
+  background: #eee repeat;
   padding-top: 70px;
 }
 
+.navbar-fixed-top {
+    box-shadow: 0px 0px 2px #555;
+}
 
 .navbar > .container .navbar-brand,
 .navbar > .container-fluid .navbar-brand {
-	color: #415C87;
+  color: $brand-color;
+}
+
+.preview-panel {
+  border: 1px solid #6DA5FE;
+  background-color: #191F2D;
+  box-shadow: -1px 0px 3px #555;
+  color: #ccc;
+  overflow: auto
+}
+
+.preview-panel-fixed-right {
+  position: fixed;
+  top: 50px;
+  right: -100%;
+  bottom: 0px;
+  z-index: 1020;
+  border-width: 0px 0px 0px 1px;
+
+  -webkit-transition: all 0.5s ease-out;
+  transition: all 0.5s ease-out;
+}
+
+.preview-panel-show {
+  right: 0%;
+  -webkit-transition: all 0.5s ease-in;
+  transition: all 0.5s ease-out;
+}
+
+.preview-body {
+  padding-top: 20px;
+
+  .btn:hover, 
+  .btn:focus, 
+  .btn.focus {
+    color: #eee;
+    text-decoration: none;
+  }
+
+  .btn:active, .btn.active {
+    outline: 0px none;
+    background-image: none;
+    box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.325) inset;
+  }
+
+  .btn-preview {
+      color: #ccc;
+      background-color: #454E63;
+      border-color: #415C87;
+  }
+}
+
+.jumbotron h1 .brand {
+  color: $brand-color;
+}
+
+.panel-default {
+    border-color: #aaa;
+    box-shadow: 0px 1px 3px #ccc;
+}
+
+.edit-fade {
+  color: #aaa;
+}
+
+input.title-input {
+  max-width: 90%;
+  border: 0px;
+  border-bottom: 1px dotted #888;
+  background-color: inherit;
+  resize: horizontal;
+  display: inline-block
+}
+
+/* Small devices (tablets, 768px and up) */
+@media (min-width: 768px) {
+  input.title-input {
+    max-width: 92%;
+  }
+}
+
+/* Medium devices (desktops, 992px and up) */
+@media (min-width: 992px) {
+  input.title-input {
+    max-width: 94%;
+  }
+}
+
+/* Large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) {  
+  input.title-input {
+    max-width: 95%;
+  }
 }

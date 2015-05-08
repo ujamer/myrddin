@@ -1,0 +1,62 @@
+{{#preview-panel class="preview-panel preview-panel-fixed-right col-xs-12 col-sm-7 col-md-6 col-lg-5" showPanel=settings.showPanel showOutput=settings.showOutput selectOutput='selectOutput' selectPreview='selectPreview'}}
+  {{#if settings.showOutput}}
+    <p>[CENTER]■[/CENTER]</p>
+    <p>
+      [b]Welcome to the Parahumans Online message boards.[/b] <br/>
+      You are currently logged in, [u]XxVoid CowboyxX[/u] <br/>
+      You are viewing: <br/>
+      •  Threads you have replied to <br/>
+      •  AND Threads that have new replies <br/>
+      •  OR private message conversations with new replies <br/>
+      •  Thread OP is displayed. <br/>
+      •  Ten posts per page <br/>
+      •  Last ten messages in private message history. <br/>
+      •  Threads and private messages are ordered chronologically. <br/>
+    </p>
+    <p>[CENTER]■[/CENTER]</p>
+  {{else}}
+    <p style="text-align: center">■</p>
+    <p>
+      <b>Welcome to the Parahumans Online message boards.</b> <br/>
+      You are currently logged in, <u>XxVoid CowboyxX</u> <br/>
+      You are viewing: <br/>
+      •  Threads you have replied to <br/>
+      •  AND Threads that have new replies <br/>
+      •  OR private message conversations with new replies <br/>
+      •  Thread OP is displayed. <br/>
+      •  Ten posts per page <br/>
+      •  Last ten messages in private message history. <br/>
+      •  Threads and private messages are ordered chronologically. <br/>
+    </p>
+    <p style="text-align: center">■</p>
+  {{/if}}
+{{/preview-panel}}
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-xs-12 col-sm-8 col-md-7 col-lg-6">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <div class="pull-right" style="padding-top: inherit;">
+            {{confirm-delete-button btnSize="" text="Delete this interlude?" action="deleteDoc" param=model.id}}
+          </div>
+          <h3>{{edit-interlude-title title=model.title action="renameDoc" param=model.id}}</h3>
+        </div>
+        <div class="panel-body">
+          Author: <br />
+          Posts per Page: <br />
+        </div>
+      </div>
+    </div>
+  </div>
+  {{#each model.threads as |thread|}}
+    <div class="row">
+      <div class="col-xs-12 col-sm-8 col-md-7 col-lg-6">
+        
+      </div>
+    </div>
+  {{/each}}
+  <button class="btn btn-primary">{{fa-icon "plus-square"}} Add New Thread</button>
+</div>
+
+{{outlet}}

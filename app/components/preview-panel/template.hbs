@@ -1,0 +1,28 @@
+<div class="row preview-body">
+  <div class="col-xs-12">
+    <div class="row">
+      <div class="col-xs-12">
+        <span class="pull-right">
+          <div class="btn-group" role="group" aria-label="...">
+            <button type="button" class="btn btn-preview btn-sm {{if showOutput 'active' ''}}" {{action 'toggleToOutput'}}>BBCode</button>
+            <button type="button" class="btn btn-preview btn-sm {{if showOutput '' 'active'}}" {{action 'toggleToPreview'}}>Preview</button>
+          </div>
+        </span>
+        <h4>
+        	{{#if showOutput}}
+            BBCode Output
+          {{else}}
+            Forum Preview
+          {{/if}}
+        </h4>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12">
+  			<br/>
+  			{{yield}}
+      </div>
+    </div>
+  </div>
+</div>
+

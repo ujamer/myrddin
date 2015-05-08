@@ -1,0 +1,45 @@
+<div class="container">
+  <div class="row">
+    <div class="col-xs-12 col-md-offset-2 col-md-8">
+       <div class="panel panel-default">
+        <div class="panel-heading">
+          <div class="jumbotron">
+            <h1 class="text-center"><span class="brand">{{fa-icon "magic"}}</span> Myrddin.</h1>
+            <p class="text-center">A Wizard for creating PHO Interludes in Worm fanfics.</p>
+            <br />
+            <p class="text-center"> 
+              <a class="btn btn-primary btn-lg" rold="button" {{action 'createDoc'}}>
+                {{fa-icon "file-o" fixedWidth=true}}
+                Create A New Interlude!
+              </a> 
+            </p>
+          </div>
+        </div>
+        
+        <ul class="list-group">
+          {{#if model}}
+            <li class="list-group-item list-group-item-success">
+                Or open an existing interlude:
+            </li>
+          {{/if}}
+          {{#each model as |document index|}}
+          <li class="list-group-item">
+            <span class="pull-right" style="">
+              {{confirm-delete-button btnSize="btn-xs" text="Delete this interlude?"action="deleteDoc" param=document.id}}
+            </span>
+            {{#link-to 'documents.view' document}}
+              {{ma-th index "+" 1}}. {{document.title}} {{fa-icon "edit" fixedWidth=true}}
+            {{/link-to}}
+          </li>
+        {{/each}}
+
+        </ul>
+
+      </div>
+    </div>
+  </div>
+ 
+
+  {{! outlets for page contents}}
+  {{outlet}}
+</div>
