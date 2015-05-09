@@ -16,7 +16,7 @@ export default Ember.Route.extend({
       var store = this.store;
 
       var doc = store.createRecord('document', {
-        title: "New Document!",
+        title: "A New Interlude!",
         postsPerPage: 10
       });
 

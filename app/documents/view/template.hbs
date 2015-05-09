@@ -3,7 +3,7 @@
     <p>[CENTER]■[/CENTER]</p>
     <p>
       [b]Welcome to the Parahumans Online message boards.[/b] <br/>
-      You are currently logged in, [u]XxVoid CowboyxX[/u] <br/>
+      You are currently logged in, [u]{{if model.user model.user "Placeholder_User"}}[/u] <br/>
       You are viewing: <br/>
       •  Threads you have replied to <br/>
       •  AND Threads that have new replies <br/>
@@ -18,7 +18,7 @@
     <p style="text-align: center">■</p>
     <p>
       <b>Welcome to the Parahumans Online message boards.</b> <br/>
-      You are currently logged in, <u>XxVoid CowboyxX</u> <br/>
+      You are currently logged in, <u>{{if model.user model.user "Placeholder_User"}}</u> <br/>
       You are viewing: <br/>
       •  Threads you have replied to <br/>
       •  AND Threads that have new replies <br/>
@@ -32,7 +32,7 @@
   {{/if}}
 {{/preview-panel}}
 
-<div class="container-fluid">
+<div class="container container-left">
   <div class="row">
     <div class="col-xs-12 col-sm-8 col-md-7 col-lg-6">
       <div class="panel panel-default">
@@ -43,8 +43,23 @@
           <h3>{{edit-interlude-title title=model.title action="renameDoc" param=model.id}}</h3>
         </div>
         <div class="panel-body">
-          Author: <br />
-          Posts per Page: <br />
+          {{! Picking logged-in user perspective}}
+          <label for="interlude-perspective-user">Interlude User</label>
+          <div class="input-group">
+            <span class="input-group-addon" id="interlude-perspective-user">{{fa-icon "user-plus"}}</span>
+            {{input type="text" class="form-control" placeholder="Pick Logged-in User" aria-describedby="basic-addon1"}}
+            <span class="input-group-addon">{{fa-icon "search"}}</span>
+          </div>
+          <br/>
+
+          {{! Picking the number of posts displayed per group.}}
+          <label for="interlude-posts-per-page">Posts per Page</label>
+          <select class="form-control" id="interlude-posts-per-page">
+            <option>10</option>
+            <option>15</option>
+            <option>20</option>
+            <option>25</option>
+          </select>
         </div>
       </div>
     </div>
