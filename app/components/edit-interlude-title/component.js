@@ -3,7 +3,7 @@ import Ember from 'ember';
 export default Ember.Component.extend({
   title: null,
   resetWidth: function(padding) {
-    padding = typeof padding != "undefined" ? padding : 5;
+    padding = typeof padding !== "undefined" ? padding : 5;
 
     // resize function
     var curID = Ember.guidFor(this);

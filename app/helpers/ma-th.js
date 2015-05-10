@@ -1,6 +1,6 @@
 import Ember from "ember";
 
-export default Ember.Handlebars.makeBoundHelper(function(lvalue, operator, rvalue, options) {
+export default Ember.Handlebars.makeBoundHelper(function(lvalue, operator, rvalue) {
   lvalue = parseFloat(lvalue);
   rvalue = parseFloat(rvalue);
       

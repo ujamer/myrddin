@@ -53,6 +53,14 @@ export default Ember.Route.extend({
 
     selectPreview: function() {
       this.get('settings').set('showOutput',false);
+    },
+
+    changePostsPerPage: function(id, count) {
+      var store = this.store;
+      store.find('document',id).then(function(doc) {
+        doc.set('postsPerPage', count);
+        doc.save();
+      });
     }
   }
 

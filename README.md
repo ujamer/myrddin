@@ -1,4 +1,4 @@
-# Phowiz
+# Mryddin
 
 A PHO interlude generating wizard written with Ember.js!
 

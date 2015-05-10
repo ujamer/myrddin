@@ -1,5 +1,5 @@
-{{#preview-panel class="preview-panel preview-panel-fixed-right col-xs-12 col-sm-7 col-md-6 col-lg-5" showPanel=settings.showPanel showOutput=settings.showOutput selectOutput='selectOutput' selectPreview='selectPreview'}}
-  {{#if settings.showOutput}}
+{{#preview-panel class="preview-panel preview-panel-fixed-right col-xs-12 col-sm-7 col-md-6 col-lg-5" showPanel=model.settings.showPanel showOutput=model.settings.showOutput selectOutput='selectOutput' selectPreview='selectPreview'}}
+  {{#if model.settings.showOutput}}
     <p>[CENTER]■[/CENTER]</p>
     <p>
       [b]Welcome to the Parahumans Online message boards.[/b] <br/>
@@ -9,7 +9,7 @@
       •  AND Threads that have new replies <br/>
       •  OR private message conversations with new replies <br/>
       •  Thread OP is displayed. <br/>
-      •  Ten posts per page <br/>
+      •  {{num-to-word model.postsPerPage}} posts per page <br/>
       •  Last ten messages in private message history. <br/>
       •  Threads and private messages are ordered chronologically. <br/>
     </p>
@@ -24,7 +24,7 @@
       •  AND Threads that have new replies <br/>
       •  OR private message conversations with new replies <br/>
       •  Thread OP is displayed. <br/>
-      •  Ten posts per page <br/>
+      •  {{num-to-word model.postsPerPage}} posts per page <br/>
       •  Last ten messages in private message history. <br/>
       •  Threads and private messages are ordered chronologically. <br/>
     </p>
@@ -47,19 +47,31 @@
           <label for="interlude-perspective-user">Interlude User</label>
           <div class="input-group">
             <span class="input-group-addon" id="interlude-perspective-user">{{fa-icon "user-plus"}}</span>
-            {{input type="text" class="form-control" placeholder="Pick Logged-in User" aria-describedby="basic-addon1"}}
+            {{input 
+              type="text" 
+              class="form-control" 
+              placeholder="Pick Logged-in User" 
+              aria-describedby="basic-addon1"}}
+
             <span class="input-group-addon">{{fa-icon "search"}}</span>
           </div>
           <br/>
 
+          {{#if model.user}}
+            <div class="well well-sm">
+              <p>Tags on this user:</p>
+
+            </div>
+            <br/>
+          {{/if}}
+
           {{! Picking the number of posts displayed per group.}}
           <label for="interlude-posts-per-page">Posts per Page</label>
-          <select class="form-control" id="interlude-posts-per-page">
-            <option>10</option>
-            <option>15</option>
-            <option>20</option>
-            <option>25</option>
-          </select>
+          {{select-post-per-page 
+            selections=model.settings.postsPerPageSelections
+            selected=model.postsPerPage
+            action='changePostsPerPage'
+            param=model.id}}
         </div>
       </div>
     </div>
