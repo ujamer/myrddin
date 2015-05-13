@@ -374,18 +374,14 @@ export default
     },
     {
       "id": "70",
-      "name": "BadSamurai"
-    },
-    {
-      "id": "71",
       "name": "QwertyD"
     },
     {
-      "id": "72",
+      "id": "71",
       "name": "Groupies"
     },
     {
-      "id": "73",
+      "id": "72",
       "name": "Acree"
     }]
   };

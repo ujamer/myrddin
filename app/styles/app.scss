@@ -86,8 +86,26 @@ body {
 }
 
 .panel-default {
-    border-color: #aaa;
-    box-shadow: 0px 1px 3px #ccc;
+  border-color: #aaa;
+  box-shadow: 0px 1px 3px #ccc;
+}
+
+.label {
+  .btn{
+    color: #eee;
+    padding: 0px 2px;
+
+  }
+  .btn:hover, 
+  .btn:focus, 
+  .btn.focus {
+    color: #444;
+  }
+}
+
+hr.thin {
+  margin-top: 5px;
+  margin-bottom: 5px;
 }
 
 .edit-fade {
@@ -101,6 +119,16 @@ input.title-input {
   background-color: inherit;
   resize: horizontal;
   display: inline-block
+}
+
+.user-dropdown {
+  overflow-x:hidden;
+  max-height:220px;
+  height: auto;
+}
+
+a.highlight {
+  background-color: #eee;
 }
 
 /* Small devices (tablets, 768px and up) */

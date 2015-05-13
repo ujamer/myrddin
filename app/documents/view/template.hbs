@@ -3,7 +3,7 @@
     <p>[CENTER]■[/CENTER]</p>
     <p>
       [b]Welcome to the Parahumans Online message boards.[/b] <br/>
-      You are currently logged in, [u]{{if model.user model.user "Placeholder_User"}}[/u] <br/>
+      You are currently logged in, [u]{{if model.user model.user.name "Placeholder_User"}}[/u] <br/>
       You are viewing: <br/>
       •  Threads you have replied to <br/>
       •  AND Threads that have new replies <br/>
@@ -18,7 +18,7 @@
     <p style="text-align: center">■</p>
     <p>
       <b>Welcome to the Parahumans Online message boards.</b> <br/>
-      You are currently logged in, <u>{{if model.user model.user "Placeholder_User"}}</u> <br/>
+      You are currently logged in, <u>{{if model.user model.user.name "Placeholder_User"}}</u> <br/>
       You are viewing: <br/>
       •  Threads you have replied to <br/>
       •  AND Threads that have new replies <br/>
@@ -45,45 +45,120 @@
         <div class="panel-body">
           {{! Picking logged-in user perspective}}
           <label for="interlude-perspective-user">Interlude User</label>
-          <div class="input-group">
-            <span class="input-group-addon" id="interlude-perspective-user">{{fa-icon "user-plus"}}</span>
-            {{input 
-              type="text" 
-              class="form-control" 
-              placeholder="Pick Logged-in User" 
-              aria-describedby="basic-addon1"}}
-
-            <span class="input-group-addon">{{fa-icon "search"}}</span>
-          </div>
-          <br/>
+          {{#interlude-user-picker 
+            givenUser= model.user
+            availableUsers=model.allUsers
+            selectUser="setUserPerspective"
+            createUser="createUser"
+            param=model.id}}
+            
+          {{/interlude-user-picker}}
 
           {{#if model.user}}
-            <div class="well well-sm">
-              <p>Tags on this user:</p>
+            {{! this is the added results box}}
+            {{interlude-tags-display
+              user=model.user
+              removeTagFromUser="removeTagFromUser"}}
 
-            </div>
-            <br/>
+            {{interlude-tags-picker 
+              availableTags=model.allTags
+              givenTags=model.user.tags
+              selectTag="addTagToUser"
+              createTag="createTag"
+              param=model.user.id}}
           {{/if}}
-
-          {{! Picking the number of posts displayed per group.}}
-          <label for="interlude-posts-per-page">Posts per Page</label>
-          {{select-post-per-page 
-            selections=model.settings.postsPerPageSelections
-            selected=model.postsPerPage
-            action='changePostsPerPage'
-            param=model.id}}
         </div>
+
+        <ul class="list-group">
+            {{! shows the tags available to this specific user}}
+
+
+          <li class="list-group-item">
+            {{! Picking the number of posts displayed per group.}}
+            <label for="interlude-posts-per-page">Posts per Page</label>
+            {{#select-post-per-page 
+              selections=model.settings.postsPerPageSelections
+              selected=model.postsPerPage
+              action="changePostsPerPage"
+              param=model.id}}
+
+            {{/select-post-per-page }}
+          </li>
+        </ul>
       </div>
     </div>
   </div>
   {{#each model.threads as |thread|}}
     <div class="row">
       <div class="col-xs-12 col-sm-8 col-md-7 col-lg-6">
-        
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <div class="pull-right" style="padding-top: 5px;">
+              {{confirm-delete-button 
+                btnSize="btn-sm"
+                text="Delete this thread?"
+                action="deleteThread"
+                param=thread.id}}
+            </div>
+            <h4>{{edit-interlude-title title=thread.name action="renameThread" param=thread.id}}</h4>
+          </div>
+          <ul class="list-group">
+            {{#each thread.posts as |post|}}
+              <li class="list-group-item">
+                {{#if post.isHead}} 
+                  <label>Original Poster</label>
+                {{else}}
+                  <div class="pull-right">
+                    {{confirm-delete-button 
+                      btnSize="btn-xs"
+                      text="Delete this post?"
+                      action="deletePost"
+                      param=post}}
+                  </div>
+
+                  <label>Responding User</label>
+                  <hr class="thin">
+                {{/if}}
+
+                {{#interlude-user-picker 
+                  givenUser= post.user
+                  availableUsers=model.allUsers
+                  selectUser="setPostUser"
+                  createUser="createPostUser"
+                  param=post}}
+                    
+                {{/interlude-user-picker}}
+
+                {{#if post.user}}
+                  {{! this is the added results box}}
+                  {{interlude-tags-display
+                    user=post.user
+                    removeTagFromUser="removeTagFromUser"}}
+
+                  {{interlude-tags-picker 
+                    availableTags=model.allTags
+                    givenTags=post.user.tags
+                    selectTag="addTagToUser"
+                    createTag="createTag"
+                    param=post.user.id}}
+                {{/if}}
+
+                <hr class="thin">
+              </li>
+            {{/each}}
+          </ul>
+          <li class="list-group-item">
+            <button class="btn btn-primary btn-xs" {{action "createPost" thread}}>
+              {{fa-icon "plus-square"}} Add New Post
+            </button>
+          </li> 
+        </div>
       </div>
     </div>
   {{/each}}
-  <button class="btn btn-primary">{{fa-icon "plus-square"}} Add New Thread</button>
+  <button class="btn btn-primary" {{action "createThread" model}}>
+    {{fa-icon "plus-square"}} Add New Thread
+  </button>
 </div>
 
 {{outlet}}

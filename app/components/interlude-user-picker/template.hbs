@@ -1,0 +1,43 @@
+<div class="input-group">
+  <span class="input-group-addon" id="interlude-perspective-user">{{fa-icon "user"}}</span>
+  {{input 
+    type="text" 
+    class="form-control"
+    value=queryValue
+    placeholder="Search by typing usernames and tags." 
+    focus-in="focusIn"}}
+
+  <span class="input-group-btn">
+      <button class="btn btn-default" {{action "clearSelected"}} title="Clear and search for users.">
+      {{#if queryValue}}
+        {{fa-icon "times" fixedWidth=true}}
+      {{else}}
+        {{fa-icon "search" fixedWidth=true}}
+      {{/if}}
+      </button>
+  </span>
+</div>
+<div class="dropdown {{if inFocus "open"}}">
+  <ul class="dropdown-menu user-dropdown" style="width: 100%;">
+    {{#each filteredSet as |user|}}
+      <li>
+        <a id="{{guid}}_u{{user.id}}" class="menuItem {{if user.highlight 'highlight' ''}}" {{action "selectItem" user}}>
+          <span class="pull-right">
+            {{#each user.tags as |label|}}
+              <span class="label label-default"> {{label.name}}</span>
+            {{/each}}
+          </span>
+          {{fa-icon "user" fixedWidth=true}} {{user.name}}
+        </a>
+      </li>
+    {{else}}
+      <li>
+        <a class="menuItem" {{action "createUser" user}}>
+          <span class="pull-right"><span class="label label-primary">{{fa-icon "plus"}} Press <b>Enter</b> or <b>Click Here</b> to create this user!</span></span>
+          {{fa-icon "user-plus" fixedWidth=true}} No matches.
+        </a>
+      </li>
+    {{/each}}
+  </ul>
+</div>
+{{yield}}

@@ -2,9 +2,9 @@ import DS from 'ember-data';
 
 export default DS.Model.extend({
   name: DS.attr('string'),
-  author: DS.belongsTo('user'),
-  postedOn: DS.attr('date'),
-  content: DS.attr('string'),
-  postStartPage: DS.attr('number'),
-  posts: DS.hasMany('post')
+  location: DS.attr('string'),
+  startPage: DS.attr('number'),
+  endPage: DS.attr('number'),
+  doc: DS.belongsTo('document'),
+  posts: DS.hasMany('post',{embedded: 'always'}),
 });

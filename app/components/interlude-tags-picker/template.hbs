@@ -1,0 +1,35 @@
+
+{{yield}}
+
+{{! This is the input group}}
+<div class="input-group input-group-sm">
+  <span class="input-group-addon" id="interlude-user-tags">{{fa-icon "tags"}}</span>
+  {{input 
+    type="text" 
+    class="form-control"
+    placeholder="Search by typing and press Enter to add." 
+    aria-describedby="basic-addon1"
+    focus-in="focusIn"
+    value=queryValue}}
+</div>
+
+{{! This is the suggestions dropdown}}
+<div class="dropdown {{if inFocus "open"}}">
+  <ul class="dropdown-menu user-dropdown" style="width: 100%;">
+    {{#each filteredSet as |tag|}}
+      <li>
+        <a id="{{guid}}_t{{tag.id}}" class="menuItem {{if tag.highlight 'highlight' ''}}" {{action "selectItem" tag}}>
+          
+          {{fa-icon "tag" fixedWidth=true}} {{tag.name}}
+        </a>
+      </li>
+    {{else}}
+      <li>
+        <a class="menuItem" {{action "createTag" queryValue}}>
+          <span class="pull-right"><span class="label label-primary">{{fa-icon "plus"}} Press <b>Enter</b> or <b>Click Here</b> to create this tag!</span></span>
+          {{fa-icon "tags" fixedWidth=true}} No matches.
+        </a>
+      </li>
+    {{/each}}
+  </ul>
+</div>

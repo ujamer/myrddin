@@ -1,10 +1,8 @@
-import Ember from 'ember';
 import DS from 'ember-data';
 
 export default DS.Model.extend({
-  settings: Ember.inject.service(),
   title: DS.attr('string'),
-  author: DS.belongsTo('user'),
-  threads: DS.hasMany('thread'),
+  user: DS.belongsTo('user'),
+  threads: DS.hasMany('thread',{embedded: 'always'}),
   postsPerPage: DS.attr('number') 
 });

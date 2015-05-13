@@ -12,6 +12,8 @@ export default Ember.Route.extend({
     var curRouter = this.router;
 
     return store.find('document', params.doc_id).then(function(doc){
+
+      // fix url if needed
       var expectedSlug = doc.get('title').dasherize();
       var givenSlug = params.doc_slug;
       //console.log('given doc title is: '+givenSlug+', while wanted title is:'+expectedSlug);
@@ -23,6 +25,29 @@ export default Ember.Route.extend({
     });
   },
 
+  setupController: function(controller, model) {
+    var store = this.store;
+
+    store.find('user').then(function(users) {
+      model.set('allUsers',users);
+    });
+
+    store.find('tag').then(function(tags) {
+      model.set('allTags',tags);
+    });
+
+    store.find('post').then(function(posts) {
+      model.set('allPosts', posts);
+    });
+
+    store.find('thread').then(function(threads) {
+      model.set('allThreads', threads);
+    });
+
+    model.set('settings', Ember.inject.service('settings'));
+    controller.set('model', model);
+  },
+
   serialize: function(doc) {
     return { 
       doc_slug: doc.get('title').dasherize(),
@@ -32,12 +57,8 @@ export default Ember.Route.extend({
 
   actions: {
     deleteDoc: function(id) {
-      var store = this.store;
-      var route = this;
-      store.find('document', id).then(function (doc) {
-        doc.destroyRecord();
-        route.transitionTo('documents');
-      });
+      
+      return true;
     },
 
     renameDoc: function(id) {
@@ -55,13 +76,234 @@ export default Ember.Route.extend({
       this.get('settings').set('showOutput',false);
     },
 
+    setUserPerspective: function(id, user) {
+      var store = this.store;
+      //console.log("Setting User Perspective");
+      store.find('document',id).then(function(doc) {
+        var originalUser = doc.get('user');
+
+        if (originalUser === null) {
+          user.get('docs').pushObject(doc);
+          user.save().then(function() {
+            doc.set('user', user);
+            doc.save();
+          });
+        } else {
+          originalUser.get('docs').removeObject(doc);
+          originalUser.save().then(function() {
+            user.get('docs').pushObject(doc);
+            user.save().then(function() {
+              doc.set('user', user);
+              doc.save();
+            });
+          });
+        }
+      });
+    },
+
+    createUser: function(id, nameString) {
+      var _this = this;
+      var store = this.store;
+
+      var user = store.createRecord('user', {
+        name: nameString
+      });
+
+      user.save().then(function () {
+        _this.send('setUserPerspective',id, user);
+      });
+    },
+
+    addTagToUser: function(id, tag) {
+      var store=this.store;
+
+      store.find('user', id).then(function(user) {
+
+        user.get('tags').pushObject(tag).save();
+      });
+    },
+
+    createTag: function(id, tagString) {
+      var store= this.store;
+
+      var tag = store.createRecord('tag', {
+        name: tagString
+      });
+      
+      store.find('user', id).then(function(user) {
+        tag.save();
+        var tags = user.get('tags');
+        tags.pushObject(tag).save();
+        tags.save();
+      });
+    },
+
+    removeTagFromUser: function(id, tag) {
+      var store=this.store;
+
+      store.find('user', id).then(function(user) {
+        var tags = user.get('tags');
+        var users = tag.get('users');
+
+        tags.removeObject(tag);
+        users.removeObject(user);
+        user.save();
+        tag.save();
+      });
+    },
+
     changePostsPerPage: function(id, count) {
       var store = this.store;
       store.find('document',id).then(function(doc) {
         doc.set('postsPerPage', count);
         doc.save();
       });
-    }
+    },
+
+    createThread: function(doc) {
+
+      var store = this.store;
+      var thread = store.createRecord('thread', {
+        name:'A New Thread'
+      });
+
+      thread.save().then(function(thread) {
+
+        var post = store.createRecord('post', {
+          isHead: true,
+          thread: thread,
+        });
+
+        post.save().then(function(post) {
+          var posts = thread.get('posts')
+          posts.pushObject(post);
+
+          thread.set('doc',doc);
+
+          doc.get('threads').pushObject(thread);
+          doc.save();
+          thread.save();
+          post.save();
+
+        });
+      });
+    },
+
+    deleteThread: function(threadID) {
+      var store = this.store;
+      var doc = this.currentModel ;
+
+      var cleanupUserInPost = function(post) {
+          console.log('cleaning up after user in posts');
+
+          var user = post.get('user');
+
+          if (user !== null) {
+            user.get('posts').removeObject(post);
+            user.save();
+          }
+          post.destroyRecord();
+          return true;
+        };
+
+      var cleanupPosts = function(thread) {
+        //console.log('cleaning up after posts');
+        // clean up Posts, then delete thread.
+        var posts = thread.get('posts');
+        posts = posts.toArray();
+        posts.forEach(cleanupUserInPost);
+        thread.destroyRecord();
+      };
+
+      var threads = doc.get('threads')
+      store.find('thread',threadID).then( function(thread) {
+        // remove the inverse from the records.
+        threads.removeObject(thread);
+        doc.save().then( function () {
+          //then destroy the record now that it's unneeded.
+          cleanupPosts(thread);
+        });
+      });
+    },
+
+    renameThread: function(threadID) {
+      var store = this.store;
+      store.find('thread',threadID).then(function(thread) {
+        //thread.set('name', count);
+        thread.save();
+      });
+    },
+
+    createPost: function(thread) {
+      var store = this.store;
+
+      var post = store.createRecord('post');
+      //console.log('created new post for thread: '+thread.id);
+      post.set('thread', thread);
+
+      post.save().then(function() {
+        thread.get('posts').pushObject(post);
+        thread.save();
+      });
+    },
+
+    deletePost: function(post) {
+      var store = this.store;
+
+      //console.log('cleaning up after user in posts');
+      var user = post.get('user');
+
+      if (user !== null) {
+        user.get('posts').removeObject(post);
+        user.save();
+      }
+
+      var thread = post.get('thread');
+
+      if(thread !== null) {
+        thread.get('posts').removeObject(post);
+        thread.save();
+      }
+      
+      post.destroyRecord();
+    },
+
+    setPostUser: function(post, user) {
+      var store = this.store;
+      console.log("Setting Post User");
+
+      var originalUser = post.get('user');
+
+      if (originalUser === null) {
+        user.get('posts').pushObject(post);
+        user.save().then(function() {
+          post.set('user', user);
+          post.save();
+        });
+      } else {
+        originalUser.get('posts').removeObject(post);
+        originalUser.save().then(function() {
+          user.get('posts').pushObject(post);
+          user.save().then(function() {
+            post.set('user', user);
+            post.save();
+          });
+        });
+      }
+    },
+
+    createPostUser: function(post, nameString) {
+      var _this = this;
+      var store = this.store;
+
+      var user = store.createRecord('user', {
+        name: nameString
+      });
+
+      user.save().then(function () {
+        _this.send('setPostUser',post, user);
+      });
+    },
   }
 
 });

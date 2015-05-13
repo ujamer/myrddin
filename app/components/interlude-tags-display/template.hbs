@@ -1,0 +1,19 @@
+
+
+<hr class="thin"/>
+<div style="min-height:50px;">
+  {{#each user.tags as |tag|}}
+    <span class="label label-default" style="margin-bottom:5px; display:inline-block">
+      {{tag.name}} 
+      <a class="btn btn-xs" {{action 'removeTagFromUser' user.id tag}}>
+        {{fa-icon "close"}} 
+      </a>
+    </span> 
+  {{else}}
+    <span class="text-muted" style="display:inline;">
+      There are no tags on this user.
+    </span>
+  {{/each}}
+</div>
+<hr class="thin"/>
+{{yield}}

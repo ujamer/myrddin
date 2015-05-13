@@ -9,7 +9,7 @@ export default Ember.Handlebars.makeBoundHelper(function(num) {
   if ((num = num.toString()).length > 2) {return 'overflow';}
   var n = ('00' + num).substr(-2).match(/^(\d{2})$/);
   if (!n) {return;} var str = '';
-  str += (n[1] !== 0) ? ((str !== '') ? 'and ' : '') + (a[Number(n[5])] || b[n[5][0]] + ' ' + a[n[5][1]]) : '';
+  str += (n[1] !== 0) ? (a[Number(n[0])] || b[n[0][0]] + ' ' + a[n[0][1]]) : '';
   return str.capitalize();
 
 });

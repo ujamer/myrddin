@@ -16,10 +16,8 @@ export default Ember.Route.extend({
   actions: {
     deleteDoc: function(id) {
       console.log(id);
-      var store = this.store;
-      store.find('document', id).then(function (doc) {
-        doc.destroyRecord();
-      });
+
+      return true;
     }
   }
 });

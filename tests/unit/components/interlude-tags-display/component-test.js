@@ -3,7 +3,7 @@ import {
   test
 } from 'ember-qunit';
 
-moduleForComponent('view/edit-interlude-title', {
+moduleForComponent('interlude-tags-display', {
   // Specify the other units that are required for this test
   // needs: ['component:foo', 'helper:bar']
 });
