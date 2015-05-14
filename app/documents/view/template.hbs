@@ -102,9 +102,38 @@
             </div>
             <h4>{{edit-interlude-title title=thread.name action="renameThread" param=thread.id}}</h4>
           </div>
-          <ul class="list-group">
-            {{#each thread.posts as |post|}}
-              <li class="list-group-item">
+          
+          <div class="panel-body">
+             
+            <label>Original Poster</label>
+
+            {{#interlude-user-picker 
+              givenUser= thread.firstPost.user
+              availableUsers=model.allUsers
+              selectUser="setPostUser"
+              createUser="createPostUser"
+              param=thread.firstPost}}
+                
+            {{/interlude-user-picker}}
+
+            {{#if thread.firstPost.user}}
+              {{! this is the added results box}}
+              {{interlude-tags-display
+                user=thread.firstPost.user
+                removeTagFromUser="removeTagFromUser"}}
+
+              {{interlude-tags-picker 
+                availableTags=model.allTags
+                givenTags=thread.firstPost.user.tags
+                selectTag="addTagToUser"
+                createTag="createTag"
+                param=thread.firstPost.user.id}}
+            {{/if}}
+          </div>
+          
+          {{#sortable-group tagName="ul" class="list-group" onChange="reorderItems" source=thread as |group|}}
+            {{#each thread.restPosts as |post|}}
+              {{#sortable-item tagName="li" class="list-group-item" model=post group=group handle=".handle"}}
                 {{#if post.isHead}} 
                   <label>Original Poster</label>
                 {{else}}
@@ -116,7 +145,9 @@
                       param=post}}
                   </div>
 
-                  <label>Responding User</label>
+                  <label class="handle">
+                    {{fa-icon "sort" fixedWidth=true border=true}} Responding User
+                  </label>
                   <hr class="thin">
                 {{/if}}
 
@@ -144,9 +175,9 @@
                 {{/if}}
 
                 <hr class="thin">
-              </li>
+              {{/sortable-item}}
             {{/each}}
-          </ul>
+          {{/sortable-group}}
           <li class="list-group-item">
             <button class="btn btn-primary btn-xs" {{action "createPost" thread}}>
               {{fa-icon "plus-square"}} Add New Post

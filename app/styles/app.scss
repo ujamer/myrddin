@@ -131,6 +131,19 @@ a.highlight {
   background-color: #eee;
 }
 
+.sortable-item{
+  transition:all .125s
+}
+
+.sortable-item.is-dragging{
+  transition-duration:0s;
+  z-index:10
+}
+
+.sortable-item.is-dropping{
+  z-index:10
+}
+
 /* Small devices (tablets, 768px and up) */
 @media (min-width: 768px) {
   input.title-input {

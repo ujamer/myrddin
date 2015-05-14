@@ -49,7 +49,7 @@ export default Ember.Route.extend({
         var cleanupPosts = function(thread) {
           //console.log('cleaning up after posts');
           // clean up Posts, then delete thread.
-          var posts = thread.get('posts')
+          var posts = thread.get('posts');
           posts = posts.toArray();
           posts.forEach(cleanupUserInPost);
 
@@ -59,7 +59,7 @@ export default Ember.Route.extend({
         var cleanupThreads = function() {
           //console.log('cleaning up after threads');
           // cleanup all the child threads
-          var threads = doc.get('threads') 
+          var threads = doc.get('threads');
           threads = threads.toArray();
           threads.forEach(cleanupPosts);
         };

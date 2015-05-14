@@ -56,7 +56,7 @@ export default Ember.Route.extend({
   },
 
   actions: {
-    deleteDoc: function(id) {
+    deleteDoc: function() {
       
       return true;
     },
@@ -175,7 +175,7 @@ export default Ember.Route.extend({
         });
 
         post.save().then(function(post) {
-          var posts = thread.get('posts')
+          var posts = thread.get('posts');
           posts.pushObject(post);
 
           thread.set('doc',doc);
@@ -215,7 +215,7 @@ export default Ember.Route.extend({
         thread.destroyRecord();
       };
 
-      var threads = doc.get('threads')
+      var threads = doc.get('threads');
       store.find('thread',threadID).then( function(thread) {
         // remove the inverse from the records.
         threads.removeObject(thread);
@@ -248,8 +248,6 @@ export default Ember.Route.extend({
     },
 
     deletePost: function(post) {
-      var store = this.store;
-
       //console.log('cleaning up after user in posts');
       var user = post.get('user');
 
@@ -269,7 +267,6 @@ export default Ember.Route.extend({
     },
 
     setPostUser: function(post, user) {
-      var store = this.store;
       console.log("Setting Post User");
 
       var originalUser = post.get('user');
@@ -304,6 +301,58 @@ export default Ember.Route.extend({
         _this.send('setPostUser',post, user);
       });
     },
+
+    reorderItems(source, newOrder) {
+
+      var oldOrder = source.get('posts');
+      var sourceIndex = -1;
+      var targetIndex = -1;
+      var removedFirst = false;
+      var foundFirstChange = false;
+      var foundObj = null;
+      var writeChanges = false;
+      
+      for (var i=0; i<oldOrder.length; i++) {
+        var oldObj = oldOrder.objectAt(i);
+        var newObj = newOrder.objectAt(i);
+        //console.log(oldObj.get('id')+", "+newObj.get('id'));
+        if (oldObj !== newObj && !foundFirstChange) {
+          // the objects are not the same. Find out if the original was moved 
+          // from this index, or another object was moved to this index.
+          foundFirstChange = true;
+          if (i+1 < oldOrder.length && oldOrder.objectAt(i+1) === newObj) {
+            // object was moved from this index
+            removedFirst = true;
+            sourceIndex = i;
+            foundObj = oldObj;
+          } else {
+            // object was moved to this index
+            targetIndex = i;
+            foundObj = newObj;
+          }
+        }
+
+        if (foundFirstChange) {
+          // check if current index contains the displaced object.
+          if (removedFirst && foundObj === newObj) {
+            targetIndex = i;
+            writeChanges = true;
+            break;
+          } else if (!removedFirst && foundObj === oldObj) {
+            sourceIndex = i;
+            writeChanges = true;
+            break;
+          }
+        }
+      }
+
+      // only modify the original array at the changed indexes
+      if (writeChanges) {
+        oldOrder.removeAt(sourceIndex);
+        oldOrder.insertAt(targetIndex,foundObj);
+        source.save();
+      }
+    }
   }
 
 });
