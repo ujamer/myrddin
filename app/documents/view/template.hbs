@@ -30,6 +30,51 @@
     </p>
     <p style="text-align: center">■</p>
   {{/if}}
+  {{#each model.threads as |thread|}}
+    {{#if model.settings.showOutput}}
+
+      <p>
+        [b]♦  Topic: {{thread.name}}[/b]<br/>
+        [b]In:  Boards ► {{thread.location}}[/b]<br/>
+        [b]{{thread.firstPost.user.name}} [b]
+        {{#each thread.firstPost.user.tags as |tag|}}
+          ({{tag.name}}) 
+        {{/each}}
+      </p>
+      [indent]
+      {{#each thread.restPosts as |post|}} 
+        <p>
+          <b>►{{post.user.name}} </b>
+          {{#each post.user.tags as |tag|}}
+            ({{tag.name}}) 
+          {{/each}}
+        </p>
+      {{/each}}
+      [/indent]
+      <p>[CENTER]■[/CENTER]</p>
+    {{else}}
+      <p>
+        <b>♦  Topic: {{thread.name}}</b><br/>
+        <b>In:  Boards ► {{thread.location}}</b><br/>
+        <b>{{thread.firstPost.user.name}} </b>
+        {{#each thread.firstPost.user.tags as |tag|}}
+          ({{tag.name}}) 
+        {{/each}}
+      </p>
+      <div style="padding-left:30px;">
+      {{#each thread.restPosts as |post|}} 
+        <p>
+          <b>►{{post.user.name}} </b>
+          {{#each post.user.tags as |tag|}}
+            ({{tag.name}}) 
+          {{/each}}
+        </p>
+      {{/each}}
+      </div>
+      <p style="text-align: center">■</p>
+    {{/if}}
+
+  {{/each}}
 {{/preview-panel}}
 
 <div class="container container-left">
@@ -105,6 +150,7 @@
           
           <div class="panel-body">
              
+
             <label>Original Poster</label>
 
             {{#interlude-user-picker 
@@ -134,22 +180,18 @@
           {{#sortable-group tagName="ul" class="list-group" onChange="reorderItems" source=thread as |group|}}
             {{#each thread.restPosts as |post|}}
               {{#sortable-item tagName="li" class="list-group-item" model=post group=group handle=".handle"}}
-                {{#if post.isHead}} 
-                  <label>Original Poster</label>
-                {{else}}
-                  <div class="pull-right">
-                    {{confirm-delete-button 
-                      btnSize="btn-xs"
-                      text="Delete this post?"
-                      action="deletePost"
-                      param=post}}
-                  </div>
+                <div class="pull-right">
+                  {{confirm-delete-button 
+                    btnSize="btn-xs"
+                    text="Delete this post?"
+                    action="deletePost"
+                    param=post}}
+                </div>
 
-                  <label class="handle">
-                    {{fa-icon "sort" fixedWidth=true border=true}} Responding User
-                  </label>
-                  <hr class="thin">
-                {{/if}}
+                <label >
+                  {{fa-icon "arrows" border=true classNames="handle"}} Responding User
+                </label>
+                <hr class="thin">
 
                 {{#interlude-user-picker 
                   givenUser= post.user

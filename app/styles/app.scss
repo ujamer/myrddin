@@ -144,6 +144,10 @@ a.highlight {
   z-index:10
 }
 
+.sortable-item .handle {
+  cursor: move;
+}
+
 /* Small devices (tablets, 768px and up) */
 @media (min-width: 768px) {
   input.title-input {

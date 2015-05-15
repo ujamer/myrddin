@@ -304,14 +304,14 @@ export default Ember.Route.extend({
 
     reorderItems(source, newOrder) {
 
-      var oldOrder = source.get('posts');
+      var oldOrder = source.get('restPosts');
       var sourceIndex = -1;
       var targetIndex = -1;
       var removedFirst = false;
       var foundFirstChange = false;
       var foundObj = null;
       var writeChanges = false;
-      
+
       for (var i=0; i<oldOrder.length; i++) {
         var oldObj = oldOrder.objectAt(i);
         var newObj = newOrder.objectAt(i);
