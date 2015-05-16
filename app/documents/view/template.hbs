@@ -39,15 +39,17 @@
         [b]{{thread.firstPost.user.name}} [b]
         {{#each thread.firstPost.user.tags as |tag|}}
           ({{tag.name}}) 
-        {{/each}}
+        {{/each}}<br/>
+        Posted On
       </p>
       [indent]
       {{#each thread.restPosts as |post|}} 
         <p>
-          <b>►{{post.user.name}} </b>
+          [b]►{{post.user.name}} [/b]
           {{#each post.user.tags as |tag|}}
             ({{tag.name}}) 
-          {{/each}}
+          {{/each}}<br/>
+          Replied On 
         </p>
       {{/each}}
       [/indent]
@@ -59,7 +61,8 @@
         <b>{{thread.firstPost.user.name}} </b>
         {{#each thread.firstPost.user.tags as |tag|}}
           ({{tag.name}}) 
-        {{/each}}
+        {{/each}}<br/>
+        Posted On
       </p>
       <div style="padding-left:30px;">
       {{#each thread.restPosts as |post|}} 
@@ -67,7 +70,8 @@
           <b>►{{post.user.name}} </b>
           {{#each post.user.tags as |tag|}}
             ({{tag.name}}) 
-          {{/each}}
+          {{/each}}<br/>
+          Replied On
         </p>
       {{/each}}
       </div>
@@ -115,8 +119,7 @@
         </div>
 
         <ul class="list-group">
-            {{! shows the tags available to this specific user}}
-
+          {{! shows the tags available to this specific user}}
 
           <li class="list-group-item">
             {{! Picking the number of posts displayed per group.}}
@@ -149,7 +152,10 @@
           </div>
           
           <div class="panel-body">
-             
+            {{board-location 
+              location=thread.location
+              thread=thread
+              saveChange='saveThreadLocation'}}<br/>
 
             <label>Original Poster</label>
 
@@ -175,6 +181,7 @@
                 createTag="createTag"
                 param=thread.firstPost.user.id}}
             {{/if}}
+
           </div>
           
           {{#sortable-group tagName="ul" class="list-group" onChange="reorderItems" source=thread as |group|}}

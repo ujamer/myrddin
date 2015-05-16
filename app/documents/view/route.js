@@ -164,7 +164,8 @@ export default Ember.Route.extend({
 
       var store = this.store;
       var thread = store.createRecord('thread', {
-        name:'A New Thread'
+        name:'A New Thread',
+        location: ''
       });
 
       thread.save().then(function(thread) {
@@ -234,12 +235,25 @@ export default Ember.Route.extend({
       });
     },
 
+    saveThreadLocation: function(thread, locationString) {
+      console.log('saving thread location.');
+      thread.set('location',locationString);
+      thread.save();
+    },
+
     createPost: function(thread) {
       var store = this.store;
 
-      var post = store.createRecord('post');
-      //console.log('created new post for thread: '+thread.id);
-      post.set('thread', thread);
+      var lastPost = thread.get('lastPost');
+      var date = "01 01 2011";
+      if (lastPost !== null) {
+        date = lastPost.get('postedOn');
+      }
+
+      var post = store.createRecord('post', {
+        thread: thread,
+        postedOn: date
+      });
 
       post.save().then(function() {
         thread.get('posts').pushObject(post);

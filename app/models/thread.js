@@ -11,10 +11,14 @@ export default DS.Model.extend({
   firstPost: function () {
   	return this.get('posts').objectAt(0);
   }.property('posts'),
-  
+
   restPosts: function () {
   	return this.get('posts').filter(function (item) {
   		return !item.get('isHead');
   	});
-  }.property('posts')
+  }.property('posts'),
+
+  lastPost: function () {
+  	return this.get('posts').get('lastObject');
+  }.property('posts'),
 });
