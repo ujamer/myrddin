@@ -37,19 +37,21 @@
         [b]♦  Topic: {{thread.name}}[/b]<br/>
         [b]In:  Boards ► {{thread.location}}[/b]<br/>
         [b]{{thread.firstPost.user.name}} [b]
+        {{is-op originalPoster=thread.firstPost.user currentPoster=thread.firstPost.user}}
         {{#each thread.firstPost.user.tags as |tag|}}
           ({{tag.name}}) 
         {{/each}}<br/>
-        Posted On
+        Posted On {{moment thread.firstPost.postedOn 'll' 'MM DD YYYY'}}:
       </p>
       [indent]
-      {{#each thread.restPosts as |post|}} 
+      {{#each thread.posts as |post|}} 
         <p>
           [b]►{{post.user.name}} [/b]
+          {{is-op originalPoster=thread.firstPost.user currentPoster=post.user}}
           {{#each post.user.tags as |tag|}}
             ({{tag.name}}) 
           {{/each}}<br/>
-          Replied On 
+          Replied On {{moment post.postedOn 'll' 'MM DD YYYY'}}:
         </p>
       {{/each}}
       [/indent]
@@ -59,19 +61,21 @@
         <b>♦  Topic: {{thread.name}}</b><br/>
         <b>In:  Boards ► {{thread.location}}</b><br/>
         <b>{{thread.firstPost.user.name}} </b>
+        {{is-op originalPoster=thread.firstPost.user currentPoster=thread.firstPost.user}}
         {{#each thread.firstPost.user.tags as |tag|}}
           ({{tag.name}}) 
         {{/each}}<br/>
-        Posted On
+        Posted On {{moment thread.firstPost.postedOn 'll' 'MM DD YYYY'}}:
       </p>
       <div style="padding-left:30px;">
-      {{#each thread.restPosts as |post|}} 
+      {{#each thread.posts as |post|}} 
         <p>
           <b>►{{post.user.name}} </b>
+          {{is-op originalPoster=thread.firstPost.user currentPoster=post.user}}
           {{#each post.user.tags as |tag|}}
             ({{tag.name}}) 
           {{/each}}<br/>
-          Replied On
+          Replied On {{moment post.postedOn 'll' 'MM DD YYYY'}}:
         </p>
       {{/each}}
       </div>
@@ -184,8 +188,8 @@
 
           </div>
           
-          {{#sortable-group tagName="ul" class="list-group" onChange="reorderItems" source=thread as |group|}}
-            {{#each thread.restPosts as |post|}}
+          {{#sortable-group tagName="ul" class="list-group" onChange="reorderItems" model=thread as |group|}}
+            {{#each thread.posts as |post|}}
               {{#sortable-item tagName="li" class="list-group-item" model=post group=group handle=".handle"}}
                 <div class="pull-right">
                   {{confirm-delete-button 

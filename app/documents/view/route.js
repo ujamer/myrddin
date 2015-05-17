@@ -36,6 +36,10 @@ export default Ember.Route.extend({
       model.set('allTags',tags);
     });
 
+    store.find('headpost').then(function(posts) {
+      model.set('allPosts', posts);
+    });
+
     store.find('post').then(function(posts) {
       model.set('allPosts', posts);
     });
@@ -170,15 +174,14 @@ export default Ember.Route.extend({
 
       thread.save().then(function(thread) {
 
-        var post = store.createRecord('post', {
+        var post = store.createRecord('headpost', {
           isHead: true,
           thread: thread,
+          postedOn: "01 01 2011",
         });
 
         post.save().then(function(post) {
-          var posts = thread.get('posts');
-          posts.pushObject(post);
-
+          thread.set('firstPost', post);
           thread.set('doc',doc);
 
           doc.get('threads').pushObject(thread);
@@ -197,10 +200,14 @@ export default Ember.Route.extend({
       var cleanupUserInPost = function(post) {
           console.log('cleaning up after user in posts');
 
-          var user = post.get('user');
+          var target = 'posts';
+          if (post.get('isHead') === true) {
+            target = 'threads';
+          }
 
+          var user = post.get('user');
           if (user !== null) {
-            user.get('posts').removeObject(post);
+            user.get(target).removeObject(post);
             user.save();
           }
           post.destroyRecord();
@@ -210,6 +217,7 @@ export default Ember.Route.extend({
       var cleanupPosts = function(thread) {
         //console.log('cleaning up after posts');
         // clean up Posts, then delete thread.
+        cleanupUserInPost(thread.get('firstPost'));
         var posts = thread.get('posts');
         posts = posts.toArray();
         posts.forEach(cleanupUserInPost);
@@ -244,11 +252,7 @@ export default Ember.Route.extend({
     createPost: function(thread) {
       var store = this.store;
 
-      var lastPost = thread.get('lastPost');
       var date = "01 01 2011";
-      if (lastPost !== null) {
-        date = lastPost.get('postedOn');
-      }
 
       var post = store.createRecord('post', {
         thread: thread,
@@ -283,18 +287,23 @@ export default Ember.Route.extend({
     setPostUser: function(post, user) {
       console.log("Setting Post User");
 
+      var target = 'posts';
+      if (post.get('isHead') === true) {
+        target = 'threads';
+      }
+
       var originalUser = post.get('user');
 
       if (originalUser === null) {
-        user.get('posts').pushObject(post);
+        user.get(target).pushObject(post);
         user.save().then(function() {
           post.set('user', user);
           post.save();
         });
       } else {
-        originalUser.get('posts').removeObject(post);
+        originalUser.get(target).removeObject(post);
         originalUser.save().then(function() {
-          user.get('posts').pushObject(post);
+          user.get(target).pushObject(post);
           user.save().then(function() {
             post.set('user', user);
             post.save();
@@ -317,8 +326,7 @@ export default Ember.Route.extend({
     },
 
     reorderItems(source, newOrder) {
-
-      var oldOrder = source.get('restPosts');
+      var oldOrder = source.get('posts');
       var sourceIndex = -1;
       var targetIndex = -1;
       var removedFirst = false;

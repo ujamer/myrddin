@@ -35,11 +35,15 @@ export default Ember.Route.extend({
       store.find('document', id).then(function (doc) {
 
         var cleanupUserInPost = function(post) {
+
+          var target = 'posts';
+          if (post.get('isHead') === true) {
+            target = 'threads';
+          }
           //console.log('cleaning up after user in posts');
           var user = post.get('user');
-
           if (user !== null) {
-            user.get('posts').removeObject(post);
+            user.get(target).removeObject(post);
             user.save();
           }
           post.destroyRecord();
@@ -49,6 +53,7 @@ export default Ember.Route.extend({
         var cleanupPosts = function(thread) {
           //console.log('cleaning up after posts');
           // clean up Posts, then delete thread.
+          cleanupUserInPost(thread.get('firstPost'));
           var posts = thread.get('posts');
           posts = posts.toArray();
           posts.forEach(cleanupUserInPost);

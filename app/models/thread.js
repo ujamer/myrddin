@@ -1,4 +1,5 @@
 import DS from 'ember-data';
+import Ember from 'ember';
 
 export default DS.Model.extend({
   name: DS.attr('string'),
@@ -6,19 +7,16 @@ export default DS.Model.extend({
   startPage: DS.attr('number'),
   endPage: DS.attr('number'),
   doc: DS.belongsTo('document'),
-  posts: DS.hasMany('post',{embedded: 'always'}),
+  posts: DS.hasMany('post',{
+    embedded: 'always',
+    inverse: 'thread'
+  }),
 
-  firstPost: function () {
-  	return this.get('posts').objectAt(0);
-  }.property('posts'),
+  firstPost: DS.belongsTo('headpost',{
+    embedded: 'always'
+  }),
 
-  restPosts: function () {
-  	return this.get('posts').filter(function (item) {
-  		return !item.get('isHead');
-  	});
-  }.property('posts'),
+  lastPost: Ember.computed(function () {
 
-  lastPost: function () {
-  	return this.get('posts').get('lastObject');
-  }.property('posts'),
+  }),
 });

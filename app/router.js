@@ -5,10 +5,12 @@ var Router = Ember.Router.extend({
   location: config.locationType
 });
 
-export default Router.map(function() {
+Router.map(function() {
   this.route('documents', {path:'/'}, function() {
     //this.route('viewNoSlug')
     this.route('view', {path: ':doc_id/:doc_slug'});
     this.route('view-no-slug', {path: ':doc_id'});
   });
 });
+
+export default Router;
