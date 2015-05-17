@@ -312,6 +312,11 @@ export default Ember.Route.extend({
       }
     },
 
+    setPostDate: function(target, dateString) {
+      target.set('postedOn', dateString);
+      target.save();
+    },
+
     createPostUser: function(post, nameString) {
       var _this = this;
       var store = this.store;

@@ -40,6 +40,7 @@
     "ember-export-application-global": "^1.0.2",
     "ember-localstorage-adapter": "https://github.com/ujamer/ember-localstorage-adapter.git#master",
     "ember-moment": "1.1.1",
+    "ember-pikaday": "git@github.com:ujamer/ember-pikaday.git",
     "ember-sortable": "git@github.com:ujamer/ember-sortable.git#support-nested-group"
   }
 }

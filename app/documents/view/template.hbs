@@ -186,6 +186,16 @@
                 param=thread.firstPost.user.id}}
             {{/if}}
 
+            <hr class="thin">
+            <label>Post Date</label>
+            {{#post-date-picker}}
+              {{pikaday-input 
+                class="form-control" 
+                value=thread.firstPost.postedOn 
+                format="MM DD YYYY" 
+                onChange="setPostDate"
+                target=thread.firstPost}}
+            {{/post-date-picker}}
           </div>
           
           {{#sortable-group tagName="ul" class="list-group" onChange="reorderItems" model=thread as |group|}}
@@ -226,6 +236,17 @@
                     createTag="createTag"
                     param=post.user.id}}
                 {{/if}}
+
+                <hr class="thin">
+                <label>Reply Date</label>
+                {{#post-date-picker}}
+                  {{pikaday-input 
+                    class="form-control" 
+                    value=post.postedOn 
+                    format="MM DD YYYY" 
+                    onChange="setPostDate"
+                    target=post}}
+                {{/post-date-picker}}
 
                 <hr class="thin">
               {{/sortable-item}}
