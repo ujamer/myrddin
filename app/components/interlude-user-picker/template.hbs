@@ -19,6 +19,7 @@
 </div>
 <div class="dropdown {{if inFocus "open"}}">
   <ul class="dropdown-menu user-dropdown" style="width: 100%;">
+  {{#if inFocus}}
     {{#each filteredSet as |user|}}
       <li>
         <a id="{{guid}}_u{{user.id}}" class="menuItem {{if user.highlight 'highlight' ''}}" {{action "selectItem" user}}>
@@ -38,6 +39,7 @@
         </a>
       </li>
     {{/each}}
+  {{/if}}
   </ul>
 </div>
 {{yield}}

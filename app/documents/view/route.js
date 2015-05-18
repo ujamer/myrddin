@@ -36,18 +36,6 @@ export default Ember.Route.extend({
       model.set('allTags',tags);
     });
 
-    store.find('headpost').then(function(posts) {
-      model.set('allPosts', posts);
-    });
-
-    store.find('post').then(function(posts) {
-      model.set('allPosts', posts);
-    });
-
-    store.find('thread').then(function(threads) {
-      model.set('allThreads', threads);
-    });
-
     model.set('settings', Ember.inject.service('settings'));
     controller.set('model', model);
   },
@@ -253,6 +241,10 @@ export default Ember.Route.extend({
       var store = this.store;
 
       var date = "01 01 2011";
+      var lastPost = thread.get('lastPost');
+      if (lastPost !== undefined && lastPost !== null) {
+        date = lastPost.get('postedOn');
+      }
 
       var post = store.createRecord('post', {
         thread: thread,

@@ -16,7 +16,14 @@ export default DS.Model.extend({
     embedded: 'always'
   }),
 
-  lastPost: Ember.computed(function () {
-
+  lastPost: Ember.computed('posts', 'firstPost', {
+    get() {
+      var replies = this.get('posts');
+      if (replies.length === 0) {
+        return this.get('firstPost');
+      } else {
+        return replies.get('lastObject');
+      }
+    }
   }),
 });

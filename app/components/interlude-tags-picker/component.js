@@ -27,6 +27,7 @@ export default Ember.Component.extend({
   reset: function() {
     var handler = "click."+Ember.guidFor(this);
     this.$(window).unbind(handler);
+    this.set('givenTags', null);
   }.on('willDestroyElement'),
 
   sortedSet: function() {
@@ -34,7 +35,7 @@ export default Ember.Component.extend({
     var storedTags = this.get('availableTags');
 
     var prefilter = [];
-    if (givenTags == null) {
+    if (givenTags == null || storedTags == null) {
       prefilter = storedTags;
     } else {
       prefilter =  storedTags.filter(function(item) {
@@ -47,7 +48,7 @@ export default Ember.Component.extend({
       sortAscending: true,
       content: prefilter
     });
-  }.property('availableTags', 'givenTags.@each'),
+  }.property('availableTags', 'givenTags'),
 
   filteredSet: function() {
     var query = this.get('queryValue') || '';

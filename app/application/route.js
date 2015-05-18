@@ -1,7 +1,13 @@
 import Ember from 'ember';
 
 export default Ember.Route.extend({
-	beforeModel: function() {
-		//this.replaceWith('documents');
-	}
+  setupController: function(controller, model) {
+    var store = this.store;
+
+    store.find('headpost');
+    store.find('post');
+    store.find('thread');
+
+    controller.set('model', model);
+  },
 });
