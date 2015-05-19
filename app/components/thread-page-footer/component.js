@@ -15,10 +15,8 @@ export default Ember.Component.extend({
 		var index = this.get('index');
 		var startPage = this.get('startPage');
 		var postPerPage = this.get('postsPerPage');
-		var firstPostOffset = startPage == 1 ? 1 : 0;
-		var currentPage = Math.floor((index+firstPostOffset) / this.get('postsPerPage') + +startPage);
 
-		if (startPage == 1) {
+		if (startPage === 1) {
 			if ((index+2) % postPerPage === 0) {
 				return true;
 			}
@@ -48,26 +46,27 @@ export default Ember.Component.extend({
 		var endPage = this.get('endPage');
 		var startPage = this.get('startPage');
 		var postPerPage = this.get('postsPerPage');
-		var firstPostOffset = startPage == 1 ? 1 : 0;
-		var currentPage = Math.floor((index+firstPostOffset) / this.get('postsPerPage') + +startPage);
+		var firstPostOffset = startPage === 1 ? 1 : 0;
+		var currentPage = Math.floor((index+firstPostOffset) / postPerPage + +startPage);
 		var displayString = "";
+		var i=0;
 
 		// assemble first part of the string
 		if (+currentPage - 1 > 5) {
 			if (isOutput) {
-				displayString += "[u]1[/u],[u]2[/u],[u]3[/u] ... [u]"+(currentPage-2)+"[/u], [u]"+(currentPage-1)+"[/u], "+currentPage;
+				displayString += "[u]1[/u], [u]2[/u], [u]3[/u] ... [u]"+(currentPage-2)+"[/u], [u]"+(currentPage-1)+"[/u], "+currentPage;
 			} else {
-				displayString += "<u>1</u>,<u>2</u>,<u>3</u> ... <u>"+(currentPage-2)+"</u>, <u>"+(currentPage-1)+"</u>, "+currentPage;
+				displayString += "<u>1</u>, <u>2</u>, <u>3</u> ... <u>"+(currentPage-2)+"</u>, <u>"+(currentPage-1)+"</u>, "+currentPage;
 			}
 		} else {
 			if (isOutput) {
-				for (var i=1; i<currentPage; i++) {
-					displayString += "[u]"+i+"[/u], "
+				for (i=1; i<currentPage; i++) {
+					displayString += "[u]"+i+"[/u], ";
 				}
 				displayString += currentPage;
 			} else {
-				for (var i=1; i<currentPage; i++) {
-					displayString += "<u>"+i+"</u>, "
+				for (i=1; i<currentPage; i++) {
+					displayString += "<u>"+i+"</u>, ";
 				}
 				displayString += currentPage;
 			}
@@ -76,17 +75,17 @@ export default Ember.Component.extend({
 		//assemble second part of the string
 		if (+endPage - +currentPage > 5) {
 			if (isOutput) {
-				displayString += ", [u]"+(currentPage+1)+"[/u], [u]"+(currentPage+2)+"[/u] ... [u]"+(endPage-2)+"[/u], [u]"+(endPage-1)+"[/u], [u]"+endPage+"[/u]"
+				displayString += ", [u]"+(currentPage+1)+"[/u], [u]"+(currentPage+2)+"[/u] ... [u]"+(endPage-2)+"[/u], [u]"+(endPage-1)+"[/u], [u]"+endPage+"[/u]";
 			} else {
-				displayString += ", <u>"+(currentPage+1)+"</u>, <u>"+(currentPage+2)+"</u> ... <u>"+(endPage-2)+"</u>, <u>"+(endPage-1)+"</u>, <u>"+endPage+"</u>"
+				displayString += ", <u>"+(currentPage+1)+"</u>, <u>"+(currentPage+2)+"</u> ... <u>"+(endPage-2)+"</u>, <u>"+(endPage-1)+"</u>, <u>"+endPage+"</u>";
 			}
 		} else if (currentPage+1 < endPage) {
 			if (isOutput) {
-				for (var i=currentPage+1; i<=endPage; i++) {
+				for (i=currentPage+1; i<=endPage; i++) {
 					displayString += ", [u]"+i+"[/u]";
 				}
 			} else {
-				for (var i=currentPage+1; i<=endPage; i++) {
+				for (i=currentPage+1; i<=endPage; i++) {
 					displayString += ", <u>"+i+"</u>";
 				}
 			}

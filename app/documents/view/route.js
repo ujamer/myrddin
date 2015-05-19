@@ -277,7 +277,7 @@ export default Ember.Route.extend({
       });
 
       // check if post count exceeds endPage.
-      var firstPostOffset =  thread.get('startPage') == 1 ? 1 : 0;
+      var firstPostOffset =  thread.get('startPage') === 1 ? 1 : 0;
       console.log((thread.get('posts').length+firstPostOffset) / this.get('currentModel').get('postsPerPage') + thread.get('startPage'));
       if ((thread.get('posts').length+firstPostOffset) / this.get('currentModel').get('postsPerPage') + thread.get('startPage')-1 > thread.get('endPage')) {
         console.log('incrementing property');
@@ -343,7 +343,7 @@ export default Ember.Route.extend({
     },
 
     setPostConent: function(post, content) {
-      console.log('saving post.')
+      //console.log('saving post.');
       post.set('content',content);
       post.save();
     },

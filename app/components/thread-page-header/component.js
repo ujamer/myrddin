@@ -14,7 +14,7 @@ export default Ember.Component.extend({
 		}
 		var index = this.get('index');
 		var startPage = this.get('startPage');
-		var firstPostOffset = startPage == 1 ? 1 : 0;
+		var firstPostOffset = startPage === 1 ? 1 : 0;
 		return Math.floor((index+firstPostOffset) / this.get('postsPerPage') + +startPage);
 	}.property('index','startPage','postsPerPage'),
 
@@ -32,7 +32,7 @@ export default Ember.Component.extend({
 		var startPage = this.get('startPage');
 		var postPerPage = this.get('postsPerPage');
 
-		if (startPage == 1) {
+		if (startPage === 1) {
 			if ((index+1) % postPerPage === 0) {
 				//console.log('current index:'+index+": "+(index+1) % postPerPage);
 				return true;

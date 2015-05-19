@@ -20,7 +20,7 @@ export default Ember.Component.extend({
 
 	actions: {
 		focusOut: function() {
-			this.sendAction('onChange', this.get('thread'), this.get('endPage'))
+			this.sendAction('onChange', this.get('thread'), this.get('endPage'));
 		}
 	}
 });
