@@ -237,19 +237,52 @@ export default Ember.Route.extend({
       thread.save();
     },
 
+    saveThreadStartPage: function(thread, startPage) {
+      thread.set('startPage',startPage);
+
+      var offset=0;
+      var totalPosts = thread.get('posts').length;
+      var postsPerPage = this.get('currentModel').get('postsPerPage');
+      if (startPage === 1) {
+        offset = Math.floor((totalPosts+1) / postsPerPage) + +startPage;
+      } else {
+        offset = Math.floor(totalPosts / postsPerPage) + +startPage;
+      }
+
+      if (offset > thread.get('endPage')) {
+        thread.set('endPage', offset);
+      }
+      thread.save();
+    },
+
+    saveThreadEndPage: function(thread, endPage) {
+      thread.set('endPage', endPage);
+      thread.save();
+    },
+
     createPost: function(thread) {
       var store = this.store;
 
-      var date = "01 01 2011";
+      // create date for the post
+      var date = "01/01/2011";
       var lastPost = thread.get('lastPost');
       if (lastPost !== undefined && lastPost !== null) {
         date = lastPost.get('postedOn');
       }
 
+      // create the post
       var post = store.createRecord('post', {
         thread: thread,
         postedOn: date
       });
+
+      // check if post count exceeds endPage.
+      var firstPostOffset =  thread.get('startPage') == 1 ? 1 : 0;
+      console.log((thread.get('posts').length+firstPostOffset) / this.get('currentModel').get('postsPerPage') + thread.get('startPage'));
+      if ((thread.get('posts').length+firstPostOffset) / this.get('currentModel').get('postsPerPage') + thread.get('startPage')-1 > thread.get('endPage')) {
+        console.log('incrementing property');
+        thread.incrementProperty('endPage');
+      }
 
       post.save().then(function() {
         thread.get('posts').pushObject(post);
@@ -307,6 +340,12 @@ export default Ember.Route.extend({
     setPostDate: function(target, dateString) {
       target.set('postedOn', dateString);
       target.save();
+    },
+
+    setPostConent: function(post, content) {
+      console.log('saving post.')
+      post.set('content',content);
+      post.save();
     },
 
     createPostUser: function(post, nameString) {

@@ -1,0 +1,11 @@
+{{#if showPageFooter}}
+  {{#if isOutput}}
+    [/indent]
+    	[b]End of Page.&nbsp;&nbsp;&nbsp;{{{pageString}}}[/b]
+    [indent]
+  {{else}}
+    <b>End of Page.&nbsp;&nbsp;&nbsp;{{{pageString}}}</b>
+  {{/if}}
+{{/if}}
+
+{{yield}}

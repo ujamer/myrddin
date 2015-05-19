@@ -1,7 +1,7 @@
 import Ember from 'ember';
 
 export default Ember.Component.extend({
-	classNames:['inline-tags'],
+	tagName: 'span',
 	originalPoster: null,
 	currentPoster: null,
 	isOriginalPoster: Ember.computed('originalPoster','currentPoster', {

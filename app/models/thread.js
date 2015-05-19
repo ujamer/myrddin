@@ -4,8 +4,12 @@ import Ember from 'ember';
 export default DS.Model.extend({
   name: DS.attr('string'),
   location: DS.attr('string'),
-  startPage: DS.attr('number'),
-  endPage: DS.attr('number'),
+  startPage: DS.attr('number',{
+    defaultValue: 1
+  }),
+  endPage: DS.attr('number',{
+    defaultValue: 1
+  }),
   doc: DS.belongsTo('document'),
   posts: DS.hasMany('post',{
     embedded: 'always',

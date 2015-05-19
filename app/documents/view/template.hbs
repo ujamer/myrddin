@@ -31,27 +31,50 @@
     <p style="text-align: center">■</p>
   {{/if}}
   {{#each model.threads as |thread|}}
-    {{#if model.settings.showOutput}}
-
+    {{#if model.settings.showOutput}}  
       <p>
         [b]♦  Topic: {{thread.name}}[/b]<br/>
         [b]In:  Boards ► {{thread.location}}[/b]<br/>
-        [b]{{thread.firstPost.user.name}} [b]
+        [b]{{thread.firstPost.user.name}} [/b]
         {{is-op originalPoster=thread.firstPost.user currentPoster=thread.firstPost.user}}
         {{#each thread.firstPost.user.tags as |tag|}}
           ({{tag.name}}) 
         {{/each}}<br/>
-        Posted On {{moment thread.firstPost.postedOn 'll' 'MM DD YYYY'}}:
+        Posted On {{moment thread.firstPost.postedOn 'MMM Do YYYY' 'MM/DD/YYYY'}}:<br/>
+        {{html-output thread.firstPost.content}}
       </p>
+
       [indent]
-      {{#each thread.posts as |post|}} 
+      {{#each thread.posts as |post index|}} 
+
+        <p>
+        {{thread-page-header
+          isOutput=model.settings.showOutput
+          postsPerPage=model.postsPerPage
+          startPage=thread.startPage
+          endPage=thread.endPage
+          index=index
+          postLength=thread.posts.length}}
+        </p>
+
         <p>
           [b]►{{post.user.name}} [/b]
           {{is-op originalPoster=thread.firstPost.user currentPoster=post.user}}
           {{#each post.user.tags as |tag|}}
             ({{tag.name}}) 
           {{/each}}<br/>
-          Replied On {{moment post.postedOn 'll' 'MM DD YYYY'}}:
+          Replied On {{moment post.postedOn 'MMM Do YYYY' 'MM/DD/YYYY'}}:<br/>
+          {{html-output post.content}}
+        </p>
+
+        <p>
+        {{thread-page-footer
+          isOutput=model.settings.showOutput
+          postsPerPage=model.postsPerPage
+          startPage=thread.startPage
+          endPage=thread.endPage
+          index=index
+          postLength=thread.posts.length}}
         </p>
       {{/each}}
       [/indent]
@@ -65,20 +88,42 @@
         {{#each thread.firstPost.user.tags as |tag|}}
           ({{tag.name}}) 
         {{/each}}<br/>
-        Posted On {{moment thread.firstPost.postedOn 'll' 'MM DD YYYY'}}:
+        Posted On {{moment thread.firstPost.postedOn 'MMM Do YYYY' 'MM/DD/YYYY'}}:<br/>
+        {{html-output thread.firstPost.content}}
       </p>
-      <div style="padding-left:30px;">
-      {{#each thread.posts as |post|}} 
+
+      {{#each thread.posts as |post index|}} 
+
         <p>
+        {{thread-page-header
+          isOutput=model.settings.showOutput
+          postsPerPage=model.postsPerPage
+          startPage=thread.startPage
+          endPage=thread.endPage
+          index=index
+          postLength=thread.posts.length}}
+        </p>
+
+        <p style="padding-left:30px;">
           <b>►{{post.user.name}} </b>
           {{is-op originalPoster=thread.firstPost.user currentPoster=post.user}}
           {{#each post.user.tags as |tag|}}
             ({{tag.name}}) 
           {{/each}}<br/>
-          Replied On {{moment post.postedOn 'll' 'MM DD YYYY'}}:
+          Replied On {{moment post.postedOn 'MMM Do YYYY' 'MM/DD/YYYY'}}:<br/>
+          {{html-output post.content}}
+        </p>
+
+        <p>
+        {{thread-page-footer
+          isOutput=model.settings.showOutput
+          postsPerPage=model.postsPerPage
+          startPage=thread.startPage
+          endPage=thread.endPage
+          index=index
+          postLength=thread.posts.length}}
         </p>
       {{/each}}
-      </div>
       <p style="text-align: center">■</p>
     {{/if}}
 
@@ -186,16 +231,45 @@
                 param=thread.firstPost.user.id}}
             {{/if}}
 
-            <hr class="thin">
+            <hr class="thin"/>
             <label>Post Date</label>
             {{#post-date-picker}}
               {{pikaday-input 
                 class="form-control" 
                 value=thread.firstPost.postedOn 
-                format="MM DD YYYY" 
+                format="MM/DD/YYYY" 
                 onChange="setPostDate"
                 target=thread.firstPost}}
             {{/post-date-picker}}
+
+            <hr class="thin"/>
+            <label>Post Content</label>
+            {{post-editor
+              post=thread.firstPost
+              postContent=thread.firstPost.content
+              onChange="setPostConent"}}
+
+            <hr class="thin"/>
+            <div class="row">
+              <div class="col-xs-6"> 
+                <label>Start Page</label>
+                {{thread-page-start-picker
+                  startPage=thread.startPage
+                  min=1
+                  thread=thread
+                  onChange="saveThreadStartPage"}}
+              </div>
+              <div class="col-xs-6"> 
+                <label>End Page</label>
+                {{thread-page-end-picker
+                  endPage=thread.endPage
+                  startPage=thread.startPage
+                  numPosts=thread.posts.length
+                  postsPerPage=model.postsPerPage
+                  thread=thread
+                  onChange="saveThreadEndPage"}}
+              </div>  
+            </div>
           </div>
           
           {{#sortable-group tagName="ul" class="list-group" onChange="reorderItems" model=thread as |group|}}
@@ -212,7 +286,7 @@
                 <label >
                   {{fa-icon "arrows" border=true classNames="handle"}} Responding User
                 </label>
-                <hr class="thin">
+                <hr class="thin"/>
 
                 {{#interlude-user-picker 
                   givenUser= post.user
@@ -237,18 +311,23 @@
                     param=post.user.id}}
                 {{/if}}
 
-                <hr class="thin">
+                <hr class="thin"/>
                 <label>Reply Date</label>
                 {{#post-date-picker}}
                   {{pikaday-input 
                     class="form-control" 
                     value=post.postedOn 
-                    format="MM DD YYYY" 
+                    format="MM/DD/YYYY" 
                     onChange="setPostDate"
                     target=post}}
                 {{/post-date-picker}}
 
-                <hr class="thin">
+                <hr class="thin"/>
+                <label>Post Content</label>
+                {{post-editor
+                  post=post
+                  postContent=post.content
+                  onChange="setPostConent"}}
               {{/sortable-item}}
             {{/each}}
           {{/sortable-group}}

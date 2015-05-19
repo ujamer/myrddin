@@ -5,5 +5,5 @@ export default DS.Model.extend({
   thread: DS.belongsTo('thread'),
   postedOn: DS.attr('string'),
   content: DS.attr('string'),
-  isHead: DS.attr('boolean')
+  isHead: DS.attr('boolean'),
 });

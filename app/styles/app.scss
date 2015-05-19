@@ -152,6 +152,10 @@ a.highlight {
   cursor: move;
 }
 
+.post-area {
+  resize:vertical;
+}
+
 /* Small devices (tablets, 768px and up) */
 @media (min-width: 768px) {
   input.title-input {
