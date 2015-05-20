@@ -1,7 +1,7 @@
 {
   "name": "phowiz",
-  "version": "0.0.0",
-  "description": "Small description for phowiz goes here",
+  "version": "0.1.0",
+  "description": "A PHO interlude generating wizard written with Ember.js!",
   "private": true,
   "directories": {
     "doc": "doc",

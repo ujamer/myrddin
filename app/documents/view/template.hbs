@@ -24,7 +24,7 @@
       •  AND Threads that have new replies <br/>
       •  OR private message conversations with new replies <br/>
       •  Thread OP is displayed. <br/>
-      •  {{num-to-word model.postsPerPage}} posts per page <br/>
+      •&nbsp;&nbsp;{{num-to-word model.postsPerPage}}&nbsp;posts per page <br/>
       •  Last ten messages in private message history. <br/>
       •  Threads and private messages are ordered chronologically. <br/>
     </p>
@@ -61,9 +61,9 @@
           [b]►{{post.user.name}} [/b]
           {{is-op originalPoster=thread.firstPost.user currentPoster=post.user}}
           {{#each post.user.tags as |tag|}}
-            ({{tag.name}}) 
+            ({{tag.name}})&nbsp;
           {{/each}}<br/>
-          Replied On {{moment post.postedOn 'MMM Do YYYY' 'MM/DD/YYYY'}}:<br/>
+          Replied On&nbsp;{{moment post.postedOn 'MMM Do YYYY' 'MM/DD/YYYY'}}:<br/>
           {{html-output post.content}}
         </p>
 
