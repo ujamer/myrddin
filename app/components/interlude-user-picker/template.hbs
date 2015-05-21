@@ -9,11 +9,13 @@
 
   <span class="input-group-btn">
       <button class="btn btn-default" {{action "clearSelected"}} title="Clear and search for users.">
-      {{#if queryValue}}
+      <span style="display:{{if queryValue 'block' 'none'}};">
         {{fa-icon "times" fixedWidth=true}}
-      {{else}}
-        {{fa-icon "search" fixedWidth=true}}
-      {{/if}}
+      </span>
+
+      <span style="display:{{unless queryValue 'block' 'none'}};">
+          {{fa-icon "search" fixedWidth=true}}
+      </span>
       </button>
   </span>
 </div>

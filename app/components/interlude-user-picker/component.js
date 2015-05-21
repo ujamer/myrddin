@@ -14,12 +14,12 @@ export default Ember.Component.extend({
   preset: function() {
     this.setCurrentUser();
     this.set('guid',Ember.guidFor(this));
-    
+
     var handler = "click."+Ember.guidFor(this);
     var _this = this;
     // handle click outside
     this.$(window).bind(handler, function(event) {
-      //console.log(Ember.$(event.target).closest(_this.$()).length);
+      //console.log(handler+": "+Ember.$(event.target).closest(_this.$()).length);
       if (Ember.$(event.target).closest(_this.$()).length === 0 && _this.get('inFocus')) {
         _this.send('focusOut');
       }
@@ -54,7 +54,7 @@ export default Ember.Component.extend({
 
   filteredSet: function() {
     var query = this.get('queryValue') || '';
-    
+
     //console.log('recalculating: '+query);
     if (query === '' || query.length < 2) {
       return this.get('sortedSet').filter(function() {return true;});
@@ -69,7 +69,7 @@ export default Ember.Component.extend({
       });
     }
   }.property('sortedSet.@each','queryValue'),
-  
+
   keyUp: function(event) {
     if(event.keyCode === 27) {
         this.send('focusOut');
@@ -124,7 +124,7 @@ export default Ember.Component.extend({
         nextResult.set("highlight", true);
         this.set("focusUser", nextResult);
 
-        
+
         var targetElement = this.$("#"+this.get('guid')+"_u"+nextResult.get('id'));
         var scrollElement = this.$(".dropdown-menu.user-dropdown");
         scrollElement.stop().animate({
