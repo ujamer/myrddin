@@ -1,6 +1,11 @@
 #
 Myrddin Changelog
 
+### Myrddin 0.1.1
+- Fixes a bug where clicking on the clear icon causes the search suggestion box
+  to be removed.
+- Implemented colored tags.
+
 ### Myrddin 0.1.0
 - Contains 72 default users from Worm canon.
 - Contains 20 default tags.

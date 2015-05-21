@@ -16,10 +16,10 @@ A PHO interlude generating wizard written with Ember.js!
 - Post date based on previous posts.
 - Support multiple pages.
 - End page constrained with the start page and the number of posts in the thread.
+- Colorize unique tags.
 
 ###TODOs:
 - BUGFIXES.
-- Colorize unique tags.
 - Move the Output/Preview selector into the nav bar, so that they are more accessible.
 - Add a select all button in the navbar to select everything in the output.
 - Move the Preview panel toggle out of the collapse so that it's still visible on mobile devices.
