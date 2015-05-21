@@ -47,7 +47,7 @@ export default Ember.Component.extend({
 		var startPage = this.get('startPage');
 		var postPerPage = this.get('postsPerPage');
 		var firstPostOffset = startPage === 1 ? 1 : 0;
-		var currentPage = Math.floor((index+firstPostOffset) / postPerPage + +startPage);
+		var currentPage = Math.floor((index+firstPostOffset) / postPerPage + (+startPage));
 		var displayString = "";
 		var i=0;
 

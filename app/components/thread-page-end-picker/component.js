@@ -9,9 +9,9 @@ export default Ember.Component.extend({
 		var totalPosts = this.get('numPosts');
 
 		if (startPage === 1) {
-			return Math.floor((totalPosts+1) / postsPerPage) + +startPage;
+			return Math.floor((totalPosts+1) / postsPerPage) + (+startPage);
 		} else {
-			return Math.floor(totalPosts / postsPerPage) + +startPage;
+			return Math.floor(totalPosts / postsPerPage) + (+startPage);
 		}
 	}.property('startPage'),
 	watchChange: function () {

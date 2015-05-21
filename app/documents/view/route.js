@@ -41,7 +41,7 @@ export default Ember.Route.extend({
   },
 
   serialize: function(doc) {
-    return { 
+    return {
       doc_slug: doc.get('title').dasherize(),
       doc_id: doc.get('id')
     };
@@ -49,7 +49,7 @@ export default Ember.Route.extend({
 
   actions: {
     deleteDoc: function() {
-      
+
       return true;
     },
 
@@ -121,7 +121,7 @@ export default Ember.Route.extend({
       var tag = store.createRecord('tag', {
         name: tagString
       });
-      
+
       store.find('user', id).then(function(user) {
         tag.save();
         var tags = user.get('tags');
@@ -244,9 +244,9 @@ export default Ember.Route.extend({
       var totalPosts = thread.get('posts').length;
       var postsPerPage = this.get('currentModel').get('postsPerPage');
       if (startPage === 1) {
-        offset = Math.floor((totalPosts+1) / postsPerPage) + +startPage;
+        offset = Math.floor((totalPosts+1) / postsPerPage) + (+startPage);
       } else {
-        offset = Math.floor(totalPosts / postsPerPage) + +startPage;
+        offset = Math.floor(totalPosts / postsPerPage) + (+startPage);
       }
 
       if (offset > thread.get('endPage')) {
@@ -305,7 +305,7 @@ export default Ember.Route.extend({
         thread.get('posts').removeObject(post);
         thread.save();
       }
-      
+
       post.destroyRecord();
     },
 
@@ -375,7 +375,7 @@ export default Ember.Route.extend({
         var newObj = newOrder.objectAt(i);
         //console.log(oldObj.get('id')+", "+newObj.get('id'));
         if (oldObj !== newObj && !foundFirstChange) {
-          // the objects are not the same. Find out if the original was moved 
+          // the objects are not the same. Find out if the original was moved
           // from this index, or another object was moved to this index.
           foundFirstChange = true;
           if (i+1 < oldOrder.length && oldOrder.objectAt(i+1) === newObj) {

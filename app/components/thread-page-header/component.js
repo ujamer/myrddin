@@ -15,7 +15,7 @@ export default Ember.Component.extend({
 		var index = this.get('index');
 		var startPage = this.get('startPage');
 		var firstPostOffset = startPage === 1 ? 1 : 0;
-		return Math.floor((index+firstPostOffset) / this.get('postsPerPage') + +startPage);
+		return Math.floor((index+firstPostOffset) / this.get('postsPerPage') + (+startPage));
 	}.property('index','startPage','postsPerPage'),
 
 	showPageHeader: function() {

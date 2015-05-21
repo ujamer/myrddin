@@ -17,10 +17,10 @@ module.exports = function(environment) {
       // Here you can pass flags/options to your application instance
       // when it is created
     },
-    
+
     contentSecurityPolicy: {
       'default-src': "'none'",
-      'script-src': "'self' www.google-analytics.com",
+      'script-src': "'self' 'unsafe-inline' www.google-analytics.com",
       'font-src': "'self'",
       'connect-src': "'self'",
       'img-src': "'self'",
