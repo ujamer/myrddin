@@ -9,8 +9,14 @@ export default Ember.Route.extend({
 
   model: function() {
     var store = this.store;
-    
+
     return store.find('document');
+  },
+
+  afterModel: function() {
+    if (ga) {
+      ga('send', 'pageview');
+    }
   },
 
   actions: {

@@ -25,6 +25,12 @@ export default Ember.Route.extend({
     });
   },
 
+  afterModel: function() {
+    if (ga) {
+      ga('send', 'pageview');
+    }
+  },
+
   setupController: function(controller, model) {
     var store = this.store;
 
@@ -103,6 +109,15 @@ export default Ember.Route.extend({
 
       user.save().then(function () {
         _this.send('setUserPerspective',id, user);
+      }).then(function (){
+        if (ga) {
+          ga('send', {
+            'hitType': 'event',
+            'eventCategory': 'button',
+            'eventAction': 'click',
+            'eventLabel': 'create user',
+          });
+        }
       });
     },
 
@@ -127,6 +142,15 @@ export default Ember.Route.extend({
         var tags = user.get('tags');
         tags.pushObject(tag).save();
         tags.save();
+      }).then(function (){
+        if (ga) {
+          ga('send', {
+            'hitType': 'event',
+            'eventCategory': 'button',
+            'eventAction': 'click',
+            'eventLabel': 'create tag',
+          });
+        }
       });
     },
 
@@ -178,6 +202,15 @@ export default Ember.Route.extend({
           post.save();
 
         });
+      }).then(function (){
+        if (ga) {
+          ga('send', {
+            'hitType': 'event',
+            'eventCategory': 'button',
+            'eventAction': 'click',
+            'eventLabel': 'create thread',
+          });
+        }
       });
     },
 
@@ -287,6 +320,15 @@ export default Ember.Route.extend({
       post.save().then(function() {
         thread.get('posts').pushObject(post);
         thread.save();
+      }).then(function (){
+        if (ga) {
+          ga('send', {
+            'hitType': 'event',
+            'eventCategory': 'button',
+            'eventAction': 'click',
+            'eventLabel': 'create post',
+          });
+        }
       });
     },
 

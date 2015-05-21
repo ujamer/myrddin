@@ -1,10 +1,10 @@
 <div class="input-group">
   <span class="input-group-addon" id="interlude-perspective-user">{{fa-icon "user"}}</span>
-  {{input 
-    type="text" 
+  {{input
+    type="text"
     class="form-control"
     value=queryValue
-    placeholder="Search by typing usernames and tags." 
+    placeholder="Search by typing usernames and tags."
     focus-in="focusIn"}}
 
   <span class="input-group-btn">
@@ -25,7 +25,7 @@
         <a id="{{guid}}_u{{user.id}}" class="menuItem {{if user.highlight 'highlight' ''}}" {{action "selectItem" user}}>
           <span class="pull-right">
             {{#each user.tags as |label|}}
-              <span class="label label-default"> {{label.name}}</span>
+              <span class="label label-default" style="background-color:{{label.color}};"> {{label.name}}</span>
             {{/each}}
           </span>
           {{fa-icon "user" fixedWidth=true}} {{user.name}}

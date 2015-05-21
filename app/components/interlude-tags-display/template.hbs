@@ -3,12 +3,12 @@
 <hr class="thin"/>
 <div style="min-height:50px;">
   {{#each user.tags as |tag|}}
-    <span class="label label-default" style="margin-bottom:5px; display:inline-block">
-      {{tag.name}} 
+    <span class="label label-default" style="margin-bottom:5px; display:inline-block; background-color:{{tag.color}};">
+      {{tag.name}}
       <a class="btn btn-xs" {{action 'removeTagFromUser' user.id tag}}>
-        {{fa-icon "close"}} 
+        {{fa-icon "close"}}
       </a>
-    </span> 
+    </span>
   {{else}}
     <span class="text-muted" style="display:inline;">
       There are no tags on this user.

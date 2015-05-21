@@ -22,6 +22,15 @@ export default Ember.Route.extend({
 
       doc.save();
 
+      if (ga) {
+        ga('send', {
+          'hitType': 'event',
+          'eventCategory': 'button',
+          'eventAction': 'click',
+          'eventLabel': 'create interlude',
+        });
+      }
+
       this.transitionTo('documents.view', doc);
     },
 

@@ -4,10 +4,10 @@
 {{! This is the input group}}
 <div class="input-group input-group-sm">
   <span class="input-group-addon" id="interlude-user-tags">{{fa-icon "tags"}}</span>
-  {{input 
-    type="text" 
+  {{input
+    type="text"
     class="form-control"
-    placeholder="Search by typing and press Enter to add." 
+    placeholder="Search by typing and press Enter to add."
     aria-describedby="basic-addon1"
     focus-in="focusIn"
     value=queryValue}}
@@ -20,8 +20,9 @@
     {{#each filteredSet as |tag|}}
       <li>
         <a id="{{guid}}_t{{tag.id}}" class="menuItem {{if tag.highlight 'highlight' ''}}" {{action "selectItem" tag}}>
-          
-          {{fa-icon "tag" fixedWidth=true}} {{tag.name}}
+          <span style="color:{{tag.color}}">
+            {{fa-icon "tag" fixedWidth=true}}
+          </span> {{tag.name}}
         </a>
       </li>
     {{else}}
