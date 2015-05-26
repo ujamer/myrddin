@@ -4,6 +4,8 @@ import Ember from 'ember';
 export default DS.Model.extend({
   name: DS.attr('string'),
   users: DS.hasMany('user'),
+  docs: DS.hasMany('document'),
+  arc: DS.attr('number'),
   colorizer: Ember.inject.service('hash-colorizer'),
   color: function () {
     var idString = this.get('id');
