@@ -178,7 +178,7 @@ export default
     {
       "id": "23",
       "name": "Weld",
-      "tags": ["5", "10"]
+      "tags": ["5"]
     },
     {
       "id": "24",

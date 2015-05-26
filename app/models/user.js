@@ -5,5 +5,6 @@ export default DS.Model.extend({
   docs: DS.hasMany('document'),
   posts: DS.hasMany('post'),
   threads: DS.hasMany('headpost'),
-  tags: DS.hasMany('tag')
+  tags: DS.hasMany('tag'),
+  userTags: DS.hasMany('usertag'),
 });
