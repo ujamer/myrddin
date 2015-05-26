@@ -12,7 +12,7 @@ export default Ember.Service.extend({
         cs1 = chroma.scale(colors1).mode('lab');
 
     var cs = function(t) {
-      if (t<0.5) return cs0(t*2);
+      if (t<0.5) { return cs0(t*2); }
       return cs1(t*2-1);
     };
 

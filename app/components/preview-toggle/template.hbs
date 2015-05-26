@@ -1,18 +1,36 @@
 {{#if settings.enabled}}
-  <ul class="nav navbar-nav navbar-right">
-    <li>
-      {{#if settings.showPanel}}
-        <a title="Hide output panel." {{action 'togglePreviewVisible'}}> 
-          {{fa-icon "toggle-on" size="lg" rotate=180}}
-          <span class="visible-xs-inline">Toggle Panel View</span>
-        </a>
-      {{else}}
-        <a title="Show output panel." {{action 'togglePreviewVisible'}}> 
-          {{fa-icon "toggle-off" size="lg" rotate=180}}
-          <span class="visible-xs-inline">Toggle Panel View</span>
-        </a>
+<div class="navbar-header pull-right">
+  <div class="btn-toolbar">
+    {{#if settings.showPanel}}
+      {{#if settings.showOutput}}
+      <div class="btn-group" role="group">
+        <button type="button" title="Select Output Text" class="btn btn-default navbar-btn btn-sm" {{action 'selectAllText'}}>
+          {{fa-icon "align-justify"}}
+        </button>
+      </div>
       {{/if}}
-    </li>
-  </ul>
+      <div class="btn-group" role="group" aria-label="Toggle between Preview and Output.">
+        <button type="button" title="Show Output" class="btn btn-default navbar-btn btn-sm {{if showOutput 'active' ''}}" {{action 'toggleToOutput'}}>
+          {{fa-icon "code"}}
+        </button>
+        <button type="button" title="Show Preview" class="btn btn-default navbar-btn btn-sm {{if showOutput '' 'active'}}" {{action 'toggleToPreview'}}>
+          {{fa-icon "eye"}}
+        </button>
+      </div>
+      <div class="btn-group">
+        <a class= "btn navbar-btn" title="Hide output panel." {{action 'togglePreviewVisible'}}>
+          {{fa-icon "toggle-on" size="lg" rotate=180}}
+        </a>
+      </div>
+    {{else}}
+
+      <div class="btn-group">
+        <a class= "btn navbar-btn" title="Show output panel." {{action 'togglePreviewVisible'}}>
+          {{fa-icon "toggle-off" size="lg" rotate=180}}
+        </a>
+      </div>
+    {{/if}}
+  </div>
+</div>
 {{/if}}
 {{yield}}

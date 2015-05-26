@@ -1,5 +1,4 @@
-#
-Myrddin Changelog
+# Myrddin Changelog
 
 ### Myrddin 0.1.1
 - Fixes a bug where clicking on the clear icon causes the search suggestion box

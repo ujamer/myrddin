@@ -1,15 +1,18 @@
 <nav class="navbar navbar-default navbar-fixed-top">
   <div class="container-fluid">
+
+    {{! Place toggle panel visibility on the right.}}
+    {{preview-toggle}}
     <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#phogen-menus">
+      {{#link-to 'documents' class="navbar-brand" title="A PHO Interlude Wizard!"}}
+        {{fa-icon "magic" size="lg"}}
+      {{/link-to}}
+      <a class="navbar-toggle collapsed pull-left" data-toggle="collapse" data-target="#phogen-menus">
         <span class="sr-only">Toggle navigation</span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
-      </button>
-      {{#link-to 'documents' class="navbar-brand" title="A PHO Interlude Wizard!"}}
-        {{fa-icon "magic" size="lg"}}
-      {{/link-to}}
+      </a>
     </div>
 
     <div class="collapse navbar-collapse" id="phogen-menus">
@@ -49,12 +52,8 @@
           </ul>
         </li>
       </ul>
-
-      {{! Place toggle panel visibility on the right.}}
-      {{preview-toggle}}
-      
     </div>
-  </div>  
+  </div>
 </nav>
 
 {{! outlets for page contents}}

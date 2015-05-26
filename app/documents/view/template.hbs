@@ -1,133 +1,135 @@
 {{#preview-panel class="preview-panel preview-panel-fixed-right col-xs-12 col-sm-7 col-md-6 col-lg-5" showPanel=model.settings.showPanel showOutput=model.settings.showOutput selectOutput='selectOutput' selectPreview='selectPreview'}}
-  {{#if model.settings.showOutput}}
-    <p>[CENTER]■[/CENTER]</p>
-    <p>
-      [b]Welcome to the Parahumans Online message boards.[/b] <br/>
-      You are currently logged in, [u]{{if model.user model.user.name "Placeholder_User"}}[/u] <br/>
-      You are viewing: <br/>
-      •  Threads you have replied to <br/>
-      •  AND Threads that have new replies <br/>
-      •  OR private message conversations with new replies <br/>
-      •  Thread OP is displayed. <br/>
-      •  {{num-to-word model.postsPerPage}} posts per page <br/>
-      •  Last ten messages in private message history. <br/>
-      •  Threads and private messages are ordered chronologically. <br/>
-    </p>
-    <p>[CENTER]■[/CENTER]</p>
-  {{else}}
-    <p style="text-align: center">■</p>
-    <p>
-      <b>Welcome to the Parahumans Online message boards.</b> <br/>
-      You are currently logged in, <u>{{if model.user model.user.name "Placeholder_User"}}</u> <br/>
-      You are viewing: <br/>
-      •  Threads you have replied to <br/>
-      •  AND Threads that have new replies <br/>
-      •  OR private message conversations with new replies <br/>
-      •  Thread OP is displayed. <br/>
-      •&nbsp;&nbsp;{{num-to-word model.postsPerPage}}&nbsp;posts per page <br/>
-      •  Last ten messages in private message history. <br/>
-      •  Threads and private messages are ordered chronologically. <br/>
-    </p>
-    <p style="text-align: center">■</p>
-  {{/if}}
-  {{#each model.threads as |thread|}}
-    {{#if model.settings.showOutput}}  
+  <div id="interludeTextContent">
+    {{#if model.settings.showOutput}}
+      <p>[CENTER]■[/CENTER]</p>
       <p>
-        [b]♦  Topic: {{thread.name}}[/b]<br/>
-        [b]In:  Boards ► {{thread.location}}[/b]<br/>
-        [b]{{thread.firstPost.user.name}} [/b]
-        {{is-op originalPoster=thread.firstPost.user currentPoster=thread.firstPost.user}}
-        {{#each thread.firstPost.user.tags as |tag|}}
-          ({{tag.name}}) 
-        {{/each}}<br/>
-        Posted On {{moment thread.firstPost.postedOn 'MMM Do YYYY' 'MM/DD/YYYY'}}:<br/>
-        {{html-output thread.firstPost.content}}
+        [b]Welcome to the Parahumans Online message boards.[/b] <br/>
+        You are currently logged in, [u]{{if model.user model.user.name "Placeholder_User"}}[/u] <br/>
+        You are viewing: <br/>
+        •  Threads you have replied to <br/>
+        •  AND Threads that have new replies <br/>
+        •  OR private message conversations with new replies <br/>
+        •  Thread OP is displayed. <br/>
+        •  {{num-to-word model.postsPerPage}} posts per page <br/>
+        •  Last ten messages in private message history. <br/>
+        •  Threads and private messages are ordered chronologically. <br/>
       </p>
-
-      [indent]
-      {{#each thread.posts as |post index|}} 
-
-        <p>
-        {{thread-page-header
-          isOutput=model.settings.showOutput
-          postsPerPage=model.postsPerPage
-          startPage=thread.startPage
-          endPage=thread.endPage
-          index=index
-          postLength=thread.posts.length}}
-        </p>
-
-        <p>
-          [b]►{{post.user.name}} [/b]
-          {{is-op originalPoster=thread.firstPost.user currentPoster=post.user}}
-          {{#each post.user.tags as |tag|}}
-            ({{tag.name}})&nbsp;
-          {{/each}}<br/>
-          Replied On&nbsp;{{moment post.postedOn 'MMM Do YYYY' 'MM/DD/YYYY'}}:<br/>
-          {{html-output post.content}}
-        </p>
-
-        <p>
-        {{thread-page-footer
-          isOutput=model.settings.showOutput
-          postsPerPage=model.postsPerPage
-          startPage=thread.startPage
-          endPage=thread.endPage
-          index=index
-          postLength=thread.posts.length}}
-        </p>
-      {{/each}}
-      [/indent]
       <p>[CENTER]■[/CENTER]</p>
     {{else}}
+      <p style="text-align: center">■</p>
       <p>
-        <b>♦  Topic: {{thread.name}}</b><br/>
-        <b>In:  Boards ► {{thread.location}}</b><br/>
-        <b>{{thread.firstPost.user.name}} </b>
-        {{is-op originalPoster=thread.firstPost.user currentPoster=thread.firstPost.user}}
-        {{#each thread.firstPost.user.tags as |tag|}}
-          ({{tag.name}}) 
-        {{/each}}<br/>
-        Posted On {{moment thread.firstPost.postedOn 'MMM Do YYYY' 'MM/DD/YYYY'}}:<br/>
-        {{html-output thread.firstPost.content}}
+        <b>Welcome to the Parahumans Online message boards.</b> <br/>
+        You are currently logged in, <u>{{if model.user model.user.name "Placeholder_User"}}</u> <br/>
+        You are viewing: <br/>
+        •  Threads you have replied to <br/>
+        •  AND Threads that have new replies <br/>
+        •  OR private message conversations with new replies <br/>
+        •  Thread OP is displayed. <br/>
+        • &nbsp;{{num-to-word model.postsPerPage}}&nbsp;posts per page <br/>
+        •  Last ten messages in private message history. <br/>
+        •  Threads and private messages are ordered chronologically. <br/>
       </p>
-
-      {{#each thread.posts as |post index|}} 
-
-        <p>
-        {{thread-page-header
-          isOutput=model.settings.showOutput
-          postsPerPage=model.postsPerPage
-          startPage=thread.startPage
-          endPage=thread.endPage
-          index=index
-          postLength=thread.posts.length}}
-        </p>
-
-        <p style="padding-left:30px;">
-          <b>►{{post.user.name}} </b>
-          {{is-op originalPoster=thread.firstPost.user currentPoster=post.user}}
-          {{#each post.user.tags as |tag|}}
-            ({{tag.name}}) 
-          {{/each}}<br/>
-          Replied On {{moment post.postedOn 'MMM Do YYYY' 'MM/DD/YYYY'}}:<br/>
-          {{html-output post.content}}
-        </p>
-
-        <p>
-        {{thread-page-footer
-          isOutput=model.settings.showOutput
-          postsPerPage=model.postsPerPage
-          startPage=thread.startPage
-          endPage=thread.endPage
-          index=index
-          postLength=thread.posts.length}}
-        </p>
-      {{/each}}
       <p style="text-align: center">■</p>
     {{/if}}
+    {{#each model.threads as |thread|}}
+      {{#if model.settings.showOutput}}
+        <p>
+          [b]♦  Topic: {{thread.name}}[/b]<br/>
+          [b]In:  Boards ► {{thread.location}}[/b]<br/>
+          [b]{{thread.firstPost.user.name}} [/b]
+          {{is-op originalPoster=thread.firstPost.user currentPoster=thread.firstPost.user}}
+          {{#each thread.firstPost.user.tags as |tag|}}
+            ({{tag.name}})
+          {{/each}}<br/>
+          Posted On {{moment thread.firstPost.postedOn 'MMM Do YYYY' 'MM/DD/YYYY'}}:<br/>
+          {{html-output thread.firstPost.content}}
+        </p>
 
-  {{/each}}
+        [indent]
+        {{#each thread.posts as |post index|}}
+
+          <p>
+          {{thread-page-header
+            isOutput=model.settings.showOutput
+            postsPerPage=model.postsPerPage
+            startPage=thread.startPage
+            endPage=thread.endPage
+            index=index
+            postLength=thread.posts.length}}
+          </p>
+
+          <p>
+            [b]►{{post.user.name}} [/b]
+            {{is-op originalPoster=thread.firstPost.user currentPoster=post.user}}
+            {{#each post.user.tags as |tag|}}
+              ({{tag.name}})&nbsp;
+            {{/each}}<br/>
+            Replied On&nbsp;{{moment post.postedOn 'MMM Do YYYY' 'MM/DD/YYYY'}}:<br/>
+            {{html-output post.content}}
+          </p>
+
+          <p>
+          {{thread-page-footer
+            isOutput=model.settings.showOutput
+            postsPerPage=model.postsPerPage
+            startPage=thread.startPage
+            endPage=thread.endPage
+            index=index
+            postLength=thread.posts.length}}
+          </p>
+        {{/each}}
+        [/indent]
+        <p>[CENTER]■[/CENTER]</p>
+      {{else}}
+        <p>
+          <b>♦  Topic: {{thread.name}}</b><br/>
+          <b>In:  Boards ► {{thread.location}}</b><br/>
+          <b>{{thread.firstPost.user.name}} </b>
+          {{is-op originalPoster=thread.firstPost.user currentPoster=thread.firstPost.user}}
+          {{#each thread.firstPost.user.tags as |tag|}}
+            ({{tag.name}})
+          {{/each}}<br/>
+          Posted On {{moment thread.firstPost.postedOn 'MMM Do YYYY' 'MM/DD/YYYY'}}:<br/>
+          {{html-output thread.firstPost.content}}
+        </p>
+
+        {{#each thread.posts as |post index|}}
+
+          <p>
+          {{thread-page-header
+            isOutput=model.settings.showOutput
+            postsPerPage=model.postsPerPage
+            startPage=thread.startPage
+            endPage=thread.endPage
+            index=index
+            postLength=thread.posts.length}}
+          </p>
+
+          <p style="padding-left:30px;">
+            <b>►{{post.user.name}} </b>
+            {{is-op originalPoster=thread.firstPost.user currentPoster=post.user}}
+            {{#each post.user.tags as |tag|}}
+              ({{tag.name}})
+            {{/each}}<br/>
+            Replied On {{moment post.postedOn 'MMM Do YYYY' 'MM/DD/YYYY'}}:<br/>
+            {{html-output post.content}}
+          </p>
+
+          <p>
+          {{thread-page-footer
+            isOutput=model.settings.showOutput
+            postsPerPage=model.postsPerPage
+            startPage=thread.startPage
+            endPage=thread.endPage
+            index=index
+            postLength=thread.posts.length}}
+          </p>
+        {{/each}}
+        <p style="text-align: center">■</p>
+      {{/if}}
+
+    {{/each}}
+  </div>
 {{/preview-panel}}
 
 <div class="container container-left">
@@ -143,13 +145,13 @@
         <div class="panel-body">
           {{! Picking logged-in user perspective}}
           <label for="interlude-perspective-user">Interlude User</label>
-          {{#interlude-user-picker 
+          {{#interlude-user-picker
             givenUser= model.user
             availableUsers=model.allUsers
             selectUser="setUserPerspective"
             createUser="createUser"
             param=model.id}}
-            
+
           {{/interlude-user-picker}}
 
           {{#if model.user}}
@@ -158,7 +160,7 @@
               user=model.user
               removeTagFromUser="removeTagFromUser"}}
 
-            {{interlude-tags-picker 
+            {{interlude-tags-picker
               availableTags=model.allTags
               givenTags=model.user.tags
               selectTag="addTagToUser"
@@ -173,7 +175,7 @@
           <li class="list-group-item">
             {{! Picking the number of posts displayed per group.}}
             <label for="interlude-posts-per-page">Posts per Page</label>
-            {{#select-post-per-page 
+            {{#select-post-per-page
               selections=model.settings.postsPerPageSelections
               selected=model.postsPerPage
               action="changePostsPerPage"
@@ -191,7 +193,7 @@
         <div class="panel panel-default">
           <div class="panel-heading">
             <div class="pull-right" style="padding-top: 5px;">
-              {{confirm-delete-button 
+              {{confirm-delete-button
                 btnSize="btn-sm"
                 text="Delete this thread?"
                 action="deleteThread"
@@ -199,22 +201,22 @@
             </div>
             <h4>{{edit-interlude-title title=thread.name action="renameThread" param=thread.id}}</h4>
           </div>
-          
+
           <div class="panel-body">
-            {{board-location 
+            {{board-location
               location=thread.location
               thread=thread
               saveChange='saveThreadLocation'}}<br/>
 
             <label>Original Poster</label>
 
-            {{#interlude-user-picker 
+            {{#interlude-user-picker
               givenUser= thread.firstPost.user
               availableUsers=model.allUsers
               selectUser="setPostUser"
               createUser="createPostUser"
               param=thread.firstPost}}
-                
+
             {{/interlude-user-picker}}
 
             {{#if thread.firstPost.user}}
@@ -223,7 +225,7 @@
                 user=thread.firstPost.user
                 removeTagFromUser="removeTagFromUser"}}
 
-              {{interlude-tags-picker 
+              {{interlude-tags-picker
                 availableTags=model.allTags
                 givenTags=thread.firstPost.user.tags
                 selectTag="addTagToUser"
@@ -234,10 +236,10 @@
             <hr class="thin"/>
             <label>Post Date</label>
             {{#post-date-picker}}
-              {{pikaday-input 
-                class="form-control" 
-                value=thread.firstPost.postedOn 
-                format="MM/DD/YYYY" 
+              {{pikaday-input
+                class="form-control"
+                value=thread.firstPost.postedOn
+                format="MM/DD/YYYY"
                 onChange="setPostDate"
                 target=thread.firstPost}}
             {{/post-date-picker}}
@@ -251,7 +253,7 @@
 
             <hr class="thin"/>
             <div class="row">
-              <div class="col-xs-6"> 
+              <div class="col-xs-6">
                 <label>Start Page</label>
                 {{thread-page-start-picker
                   startPage=thread.startPage
@@ -259,7 +261,7 @@
                   thread=thread
                   onChange="saveThreadStartPage"}}
               </div>
-              <div class="col-xs-6"> 
+              <div class="col-xs-6">
                 <label>End Page</label>
                 {{thread-page-end-picker
                   endPage=thread.endPage
@@ -268,15 +270,15 @@
                   postsPerPage=model.postsPerPage
                   thread=thread
                   onChange="saveThreadEndPage"}}
-              </div>  
+              </div>
             </div>
           </div>
-          
+
           {{#sortable-group tagName="ul" class="list-group" onChange="reorderItems" model=thread as |group|}}
             {{#each thread.posts as |post|}}
               {{#sortable-item tagName="li" class="list-group-item" model=post group=group handle=".handle"}}
                 <div class="pull-right">
-                  {{confirm-delete-button 
+                  {{confirm-delete-button
                     btnSize="btn-xs"
                     text="Delete this post?"
                     action="deletePost"
@@ -288,13 +290,13 @@
                 </label>
                 <hr class="thin"/>
 
-                {{#interlude-user-picker 
+                {{#interlude-user-picker
                   givenUser= post.user
                   availableUsers=model.allUsers
                   selectUser="setPostUser"
                   createUser="createPostUser"
                   param=post}}
-                    
+
                 {{/interlude-user-picker}}
 
                 {{#if post.user}}
@@ -303,7 +305,7 @@
                     user=post.user
                     removeTagFromUser="removeTagFromUser"}}
 
-                  {{interlude-tags-picker 
+                  {{interlude-tags-picker
                     availableTags=model.allTags
                     givenTags=post.user.tags
                     selectTag="addTagToUser"
@@ -314,10 +316,10 @@
                 <hr class="thin"/>
                 <label>Reply Date</label>
                 {{#post-date-picker}}
-                  {{pikaday-input 
-                    class="form-control" 
-                    value=post.postedOn 
-                    format="MM/DD/YYYY" 
+                  {{pikaday-input
+                    class="form-control"
+                    value=post.postedOn
+                    format="MM/DD/YYYY"
                     onChange="setPostDate"
                     target=post}}
                 {{/post-date-picker}}
@@ -335,7 +337,7 @@
             <button class="btn btn-primary btn-xs" {{action "createPost" thread}}>
               {{fa-icon "plus-square"}} Add New Post
             </button>
-          </li> 
+          </li>
         </div>
       </div>
     </div>
