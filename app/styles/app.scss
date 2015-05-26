@@ -16,11 +16,11 @@ body {
 }
 
 .container-left {
-  margin-left: 0px; 
+  margin-left: 0px;
 }
 
 .container-right {
-  margin-left: 0px; 
+  margin-left: 0px;
 }
 
 .navbar-fixed-top {
@@ -30,6 +30,21 @@ body {
 .navbar > .container .navbar-brand,
 .navbar > .container-fluid .navbar-brand {
   color: $brand-color;
+}
+
+.btn-noborder {
+  margin-right: -10px;
+  color: #777;
+}
+
+.btn-noborder:hover,
+.btn-noborder:focus,
+.btn-noborder:active {
+  color: #444;
+  text-decoration: none;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+
 }
 
 .preview-panel {
@@ -61,8 +76,8 @@ body {
 .preview-body {
   padding-top: 20px;
 
-  .btn:hover, 
-  .btn:focus, 
+  .btn:hover,
+  .btn:focus,
   .btn.focus {
     color: #eee;
     text-decoration: none;
@@ -100,8 +115,8 @@ body {
     padding: 0px 2px;
 
   }
-  .btn:hover, 
-  .btn:focus, 
+  .btn:hover,
+  .btn:focus,
   .btn.focus {
     color: #444;
   }
@@ -171,7 +186,7 @@ a.highlight {
 }
 
 /* Large devices (large desktops, 1200px and up) */
-@media (min-width: 1200px) {  
+@media (min-width: 1200px) {
   input.title-input {
     max-width: 95%;
   }
