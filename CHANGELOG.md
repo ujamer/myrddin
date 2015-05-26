@@ -1,5 +1,10 @@
 # Myrddin Changelog
 
+### Mryddin 0.2.0
+- Move the Output/Preview selector into the nav bar, so that they are more accessible.
+- Add a select all button in the navbar to select everything in the output.
+- Move the Preview panel toggle out of the collapse so that it's still visible on mobile devices.
+
 ### Myrddin 0.1.1
 - Fixes a bug where clicking on the clear icon causes the search suggestion box
   to be removed.

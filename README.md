@@ -17,12 +17,10 @@ A PHO interlude generating wizard written with Ember.js!
 - Support multiple pages.
 - End page constrained with the start page and the number of posts in the thread.
 - Colorize unique tags.
+- Select the output text with one click for easy copying.
 
 ###TODOs:
 - BUGFIXES.
-- Move the Output/Preview selector into the nav bar, so that they are more accessible.
-- Add a select all button in the navbar to select everything in the output.
-- Move the Preview panel toggle out of the collapse so that it's still visible on mobile devices.
 - Add a back to the top button on all posts to go to the head post.
 - Add a link on the Responding user to scroll the output/preview to that post.
 - Add a BBcode parser on the post content body in the preview section.
