@@ -16,11 +16,11 @@
   "engines": {
     "node": ">= 0.10.0"
   },
-  "author": "",
+  "author": "Yun-yu Shen",
   "license": "MIT",
   "devDependencies": {
     "broccoli-asset-rev": "^2.0.2",
-    "ember-cli": "^0.2.5",
+    "ember-cli": "^0.2.7",
     "ember-cli-app-version": "0.3.3",
     "ember-cli-auto-complete": "^0.1.1",
     "ember-cli-babel": "^5.0.0",
@@ -35,8 +35,8 @@
     "ember-cli-qunit": "0.3.13",
     "ember-cli-sass": "4.0.0",
     "ember-cli-uglify": "^1.0.1",
-    "ember-data": "1.0.0-beta.17",
-    "ember-disable-proxy-controllers": "^0.7.0",
+    "ember-data": "1.0.0-beta.18",
+    "ember-disable-proxy-controllers": "^1.0.0",
     "ember-export-application-global": "^1.0.2",
     "ember-localstorage-adapter": "https://github.com/ujamer/ember-localstorage-adapter.git#master",
     "ember-moment": "1.1.1",
